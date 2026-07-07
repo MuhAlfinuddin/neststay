@@ -38,7 +38,7 @@ class AuthController extends Controller
 
             // Check if homestay status is suspended
             $user = Auth::user();
-            if ($user->role !== 'super_admin' && $user->homestay) {
+            if ($user->role !== 'super_admin' && $user->homestay !== null) {
                 if ($user->homestay->status !== 'active') {
                     Auth::logout();
                     return back()->withErrors([
@@ -77,7 +77,7 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'homestay_name' => ['required', 'string', 'max:255'],
             'homestay_address' => ['required', 'string'],
-            'homestay_phone' => ['required', 'string', 'max:20'],
+            'homestay_phone' => ['required', 'string', 'max:20', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
         ]);
 
         $slug = Str::slug($request->homestay_name);

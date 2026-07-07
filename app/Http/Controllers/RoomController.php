@@ -28,11 +28,26 @@ class RoomController extends Controller
 
     public function create()
     {
+        $user = auth()->user();
+        $homestay = $user->homestay;
+
+        if ($homestay->plan === 'hemat' && $homestay->rooms()->count() >= 4) {
+            return redirect()->route('rooms.index')->with('error', 'Gagal menambah kamar. Paket Hemat hanya mendukung maksimal 4 kamar.');
+        }
+
         return view('rooms.create');
     }
 
     public function store(Request $request)
     {
+        $user = auth()->user();
+        $homestay = $user->homestay;
+
+        // Plan limitation check
+        if ($homestay->plan === 'hemat' && $homestay->rooms()->count() >= 4) {
+            return back()->with('error', 'Gagal menambah kamar. Paket Hemat hanya mendukung maksimal 4 kamar. Silakan upgrade ke Paket Lengkap untuk menambah lebih banyak kamar.');
+        }
+
         $request->validate([
             'room_number' => ['required', 'string', 'max:50'],
             'room_type' => ['required', 'string', 'max:100'],
@@ -48,9 +63,9 @@ class RoomController extends Controller
         }
 
         // Retrieve homestay_id from current auth user
-        $homestayId = auth()->user()->homestay_id;
+        $homestayId = $user->homestay_id;
 
-        Room::create(array_merge($request->all(), ['homestay_id' => $homestayId]));
+        Room::create(array_merge($request->only(['room_number', 'room_type', 'price_per_night', 'status', 'description']), ['homestay_id' => $homestayId]));
 
         return redirect()->route('rooms.index')->with('success', 'Kamar berhasil ditambahkan!');
     }
@@ -75,7 +90,7 @@ class RoomController extends Controller
             return back()->withErrors(['room_number' => 'Nomor kamar sudah terdaftar di homestay ini.'])->withInput();
         }
 
-        $room->update($request->all());
+        $room->update($request->only(['room_number', 'room_type', 'price_per_night', 'status', 'description']));
 
         return redirect()->route('rooms.index')->with('success', 'Kamar berhasil diperbarui!');
     }

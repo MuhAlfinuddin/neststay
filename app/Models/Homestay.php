@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['name', 'address', 'phone', 'slug', 'status'])]
+#[Fillable(['name', 'address', 'phone', 'slug', 'status', 'plan', 'subscription_status'])]
 class Homestay extends Model
 {
     public function users()

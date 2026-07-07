@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Owner for Tenant 1
-        $ownerA = User::create([
+        User::create([
             'name' => 'Hendra Wijaya',
             'email' => 'ownerA@staynest.com',
             'password' => Hash::make('password'),
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Staff for Tenant 1
-        $staffA = User::create([
+        User::create([
             'name' => 'Siti Aminah',
             'email' => 'staffA@staynest.com',
             'password' => Hash::make('password'),
@@ -185,7 +185,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Owner for Tenant 2
-        $ownerB = User::create([
+        User::create([
             'name' => 'Wayan Sudarta',
             'email' => 'ownerB@staynest.com',
             'password' => Hash::make('password'),

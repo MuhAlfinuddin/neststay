@@ -13,14 +13,12 @@ class StaffController extends Controller
      */
     public function index()
     {
-        // Enforce Owner check! Only Owners can manage staff.
         if (auth()->user()->role !== 'owner') {
             abort(403, 'Akses khusus Pemilik (Owner) homestay.');
         }
 
         $homestayId = auth()->user()->homestay_id;
 
-        // Retrieve other users belonging to the same homestay having 'staff' role
         $staffs = User::where('homestay_id', $homestayId)
             ->where('role', 'staff')
             ->latest()
@@ -37,6 +35,18 @@ class StaffController extends Controller
         if (auth()->user()->role !== 'owner') {
             abort(403);
         }
+
+        $user = auth()->user();
+        $homestay = $user->homestay;
+
+        // Plan limitation check: Paksa batasan 2 staff untuk Paket Hemat
+        if ($homestay->plan === 'hemat') {
+            $currentStaffCount = User::where('homestay_id', $homestay->id)->where('role', 'staff')->count();
+            if ($currentStaffCount >= 2) {
+                return redirect()->route('staff.index')->with('error', 'Gagal menambah staff. Paket Hemat hanya mendukung maksimal 2 akun staff.');
+            }
+        }
+
         return view('staff.create');
     }
 
@@ -49,20 +59,29 @@ class StaffController extends Controller
             abort(403);
         }
 
+        $user = auth()->user();
+        $homestay = $user->homestay;
+
+        // Plan limitation check
+        if ($homestay->plan === 'hemat') {
+            $currentStaffCount = User::where('homestay_id', $homestay->id)->where('role', 'staff')->count();
+            if ($currentStaffCount >= 2) {
+                return back()->with('error', 'Gagal menambah staff. Paket Hemat hanya mendukung maksimal 2 akun staff.');
+            }
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $homestayId = auth()->user()->homestay_id;
-
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'staff',
-            'homestay_id' => $homestayId,
+            'homestay_id' => $homestay->id,
         ]);
 
         return redirect()->route('staff.index')->with('success', 'Akun Staff berhasil dibuat!');
@@ -77,7 +96,6 @@ class StaffController extends Controller
             abort(403);
         }
 
-        // Safety check to make sure Owner is deleting staff from their own homestay!
         if ($staff->homestay_id !== auth()->user()->homestay_id || $staff->role !== 'staff') {
             abort(403, 'Tindakan ilegal.');
         }

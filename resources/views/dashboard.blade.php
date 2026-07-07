@@ -4,6 +4,25 @@
 
 @section('content')
 <div class="space-y-8">
+    {{-- Payment Notification Banner --}}
+    @if (isset($homestay) && $homestay->subscription_status !== 'active')
+        <div class="p-4 mb-6 rounded-xl border border-amber-200 bg-amber-50 text-amber-800">
+            <div class="flex items-center space-x-4">
+                <div class="text-2xl">⚠️</div>
+                <div>
+                    <p class="font-bold">Paket '{{ ucfirst($homestay->plan) }}' Anda menunggu pembayaran.</p>
+                    <p class="text-sm">Silakan selesaikan pembayaran untuk mengaktifkan semua fitur dan menghilangkan batasan.</p>
+                </div>
+                <form action="{{ route('payments.activate') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="ml-auto whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-lg transition">
+                        Bayar Sekarang
+                    </button>
+                </form>
+            </div>
+        </div>
+    @endif
+
     <!-- Header Welcome -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
@@ -97,10 +116,10 @@
                         @foreach ($rooms as $room)
                             <div class="p-4 rounded-xl border relative flex flex-col justify-between h-28 transition hover:border-slate-300
                                 @if ($room->status === 'available') bg-emerald-50/20 border-emerald-100 @elseif ($room->status === 'occupied') bg-red-50/20 border-red-100 @else bg-amber-50/20 border-amber-100 @endif">
-                                
+
                                 <div class="flex justify-between items-start">
                                     <span class="text-xs font-semibold text-slate-400 uppercase">{{ $room->room_type }}</span>
-                                    <span class="w-2.5 h-2.5 rounded-full 
+                                    <span class="w-2.5 h-2.5 rounded-full
                                         @if ($room->status === 'available') bg-emerald-500 @elseif ($room->status === 'occupied') bg-red-500 @else bg-amber-500 @endif">
                                     </span>
                                 </div>

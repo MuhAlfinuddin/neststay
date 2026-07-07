@@ -41,6 +41,22 @@ class SuperAdminController extends Controller
     }
 
     /**
+     * Display Homestay Management page (separate from Dashboard).
+     */
+    public function homestays()
+    {
+        if (auth()->user()->role !== 'super_admin') {
+            abort(403, 'Akses khusus Administrator Utama.');
+        }
+
+        $homestays = Homestay::with(['users' => function($q) {
+            $q->where('role', 'owner');
+        }])->latest()->paginate(10);
+
+        return view('super_admin.dashboard', compact('homestays'));
+    }
+
+    /**
      * Toggle Homestay active/suspended status.
      */
     public function toggleStatus(Homestay $homestay)

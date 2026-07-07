@@ -59,7 +59,7 @@ class PaymentController extends Controller
         // Automatically update reservation status if full payment is paid
         if ($request->payment_status === 'paid') {
             $reservation = Reservation::findOrFail($request->reservation_id);
-            if ($reservation->status === 'pending') {
+            if ($reservation->status === 'pending' && $request->amount >= $reservation->total_price) {
                 $reservation->update(['status' => 'confirmed']);
             }
         }
@@ -74,6 +74,19 @@ class PaymentController extends Controller
     {
         $payment->load(['reservation.guest', 'reservation.room', 'homestay']);
         return view('payments.show', compact('payment'));
+    }
+
+    public function activateSubscription(Request $request)
+    {
+        $user = auth()->user();
+        $homestay = $user->homestay;
+
+        if ($homestay) {
+            $homestay->subscription_status = 'active';
+            $homestay->save(); // Menggunakan save() agar lebih aman
+            return redirect()->route('dashboard')->with('success', 'Paket berhasil diaktifkan!');
+        }
+        return back()->with('error', 'Gagal mengaktifkan paket.');
     }
 
     public function destroy(Payment $payment)

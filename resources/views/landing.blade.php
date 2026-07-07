@@ -1,206 +1,467 @@
-@extends('layouts.guest')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StayNest — Management Homestay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6EFDC;
+    --paper-deep:#EEE1C3;
+    --panel:#FFFBF1;
+    --ink:#2B2013;
+    --ink-soft:#6B5A44;
+    --teak:#6B4226;
+    --teak-deep:#4A2D19;
+    --leaf:#4F7942;
+    --leaf-deep:#39592F;
+    --marigold:#E3A857;
+    --marigold-deep:#C6863A;
+    --clay:#B5533C;
+    --line: rgba(43,32,19,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%; overscroll-behavior:none;}
+  body{
+    background:var(--teak-deep);
+    color:var(--ink);
+    font-family:'Nunito', sans-serif;
+    line-height:1.6;
+    overflow:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{font-family:'Zilla Slab', serif; font-weight:700; letter-spacing:-0.01em; color:var(--teak-deep);}
+  .hand{font-family:'Caveat', cursive; font-weight:700;}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:3px solid var(--marigold); outline-offset:2px; border-radius:6px;}
 
-@section('content')
-<!-- Hero Section -->
-<div class="relative overflow-hidden bg-white py-24 sm:py-32">
-    <!-- Background Gradients -->
-    <div class="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-slate-50 shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:-mr-80 lg:-mr-96" aria-hidden="true"></div>
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            <div class="lg:col-span-7">
-                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-xs font-semibold text-indigo-600 mb-6">
-                    <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Platform SaaS Homestay Terbaik #1 di Sleman</span>
-                </div>
-                <h1 class="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-none">
-                    Kelola Homestay Lebih Praktis & Bebas <span class="text-indigo-600 bg-clip-text">Overbooking</span>
-                </h1>
-                <p class="mt-6 text-lg text-slate-600 leading-relaxed max-w-2xl">
-                    StayNest membantu pemilik homestay, guest house, dan villa mengelola kamar, tamu, pemesanan, pembayaran, dan laporan keuangan dalam satu sistem multi-tenant terpusat.
-                </p>
-                <div class="mt-10 flex flex-wrap gap-4">
-                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-lg shadow-indigo-600/20">
-                        Mulai Coba Gratis 14 Hari
-                    </a>
-                    <a href="#features" class="inline-flex items-center justify-center px-6 py-3 text-base font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
-                        Lihat Fitur Lengkap
-                    </a>
-                </div>
-                <div class="mt-12 grid grid-cols-3 gap-6 border-t border-slate-100 pt-8 max-w-lg">
-                    <div>
-                        <p class="text-3xl font-extrabold text-slate-900">100%</p>
-                        <p class="text-sm text-slate-500 mt-1">Multi-Tenant Scoped</p>
-                    </div>
-                    <div>
-                        <p class="text-3xl font-extrabold text-slate-900">Real-Time</p>
-                        <p class="text-sm text-slate-500 mt-1">Pencegahan Overbooking</p>
-                    </div>
-                    <div>
-                        <p class="text-3xl font-extrabold text-slate-900">Instant</p>
-                        <p class="text-sm text-slate-500 mt-1">Laporan Keuangan</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="lg:col-span-5 relative">
-                <!-- Beautiful visual card overlay representation -->
-                <div class="relative bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-3xl p-8 text-white shadow-2xl overflow-hidden aspect-[4/3] flex flex-col justify-between">
-                    <div class="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
-                    <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-emerald-500/20 rounded-full blur-2xl"></div>
-                    
-                    <div class="relative flex justify-between items-center">
-                        <div class="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold">StayNest Pro</div>
-                        <div class="text-xl font-bold tracking-tight">StayNest.com</div>
-                    </div>
-                    
-                    <div class="relative my-6">
-                        <p class="text-sm text-indigo-100 uppercase tracking-wider">Okupansi Kamar Hari Ini</p>
-                        <h2 class="text-5xl font-black mt-2">87.5%</h2>
-                        <p class="text-xs text-indigo-100 mt-2">7 dari 8 Kamar Terisi</p>
-                    </div>
-                    
-                    <div class="relative flex items-center justify-between border-t border-white/20 pt-4">
-                        <div>
-                            <p class="text-xs text-indigo-100">Pendapatan Bulan Ini</p>
-                            <p class="text-lg font-bold">Rp 12.850.000</p>
-                        </div>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-400/20 text-emerald-300">
-                            +12.4% vs bln lalu
-                        </span>
-                    </div>
-                </div>
-            </div>
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--leaf-deep); background:rgba(79,121,66,0.12);
+    padding:6px 14px; border-radius:999px;
+  }
+  .eyebrow::before{content:"🌿";}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 26px; border-radius:14px; font-weight:800; font-size:15px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease; border:none;
+  }
+  .btn-leaf{background:var(--marigold-deep); color:#FBF6E9; box-shadow:0 6px 0 var(--teak-deep);}
+  .btn-leaf:hover{transform:translateY(-2px); box-shadow:0 8px 0 var(--teak-deep);}
+  .btn-outline{background:transparent; color:var(--teak-deep); border:2px solid var(--teak);}
+  .btn-outline:hover{background:rgba(107,66,38,0.08);}
+
+  /* ============ BOOK: horizontal snap-scroll pages ============ */
+  .book{
+    display:flex;
+    height:100vh;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+  }
+  .book::-webkit-scrollbar{display:none;}
+  .page{
+    flex:0 0 100vw;
+    height:100vh;
+    scroll-snap-align:start;
+    background:var(--paper);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:56px 8vw 90px;
+    overflow-y:auto;
+    position:relative;
+  }
+  .page-num{
+    position:absolute; bottom:22px; left:8vw;
+    font-family:'Zilla Slab',serif; font-size:12px; color:var(--ink-soft);
+    letter-spacing:0.08em;
+  }
+
+  /* ---- Page 0: Cover ---- */
+  .cover{
+    background:#1A150C;
+    align-items:center; text-align:center;
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 3px, transparent 3px 26px);
+  }
+  .cover .logo-mark{
+    width:64px; height:64px; border-radius:16px; background:var(--marigold);
+    display:flex; align-items:center; justify-content:center; font-size:30px; margin:0 auto 22px;
+  }
+  .cover h1{color:#F6EFDC; font-size:clamp(2rem,5vw,3.4rem); margin-bottom:14px;}
+  .cover p{color:rgba(246,239,220,0.75); max-width:480px; margin:0 auto 30px; font-size:16px;}
+  .cover .hint{color:rgba(246,239,220,0.55); font-size:13px; margin-top:26px;}
+
+  /* ---- Page 1: Papan Kunci ---- */
+  .kunci-page{align-items:center; background:#D2B48C;}
+  .kunci-wrap{display:flex; gap:60px; align-items:center; max-width:1000px; margin:0 auto; flex-wrap:wrap; justify-content:center;}
+  .kunci-copy{max-width:340px;}
+  .kunci-copy h2{font-size:clamp(1.5rem,3vw,2.1rem); margin:14px 0 12px;}
+  .kunci-copy p{color:var(--ink-soft); font-size:14.5px;}
+
+  .pegboard{
+    background:var(--teak); border-radius:22px; padding:26px; position:relative; width:340px;
+    box-shadow:0 20px 40px -18px rgba(43,32,19,0.5);
+  }
+  .pegboard-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;}
+  .pegboard-head h3{color:#F6EFDC; font-size:14px;}
+  .pegboard-head p{color:rgba(246,239,220,0.7); font-size:10.5px; margin-top:2px;}
+  .pill-live{font-size:10px; font-weight:800; color:#2B2013; background:var(--marigold); padding:4px 9px; border-radius:999px;}
+  .peg-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:12px 8px; margin-bottom:16px;}
+  .peg{display:flex; flex-direction:column; align-items:center; gap:5px;}
+  .peg-hook{width:16px; height:9px; border-radius:0 0 7px 7px; background:rgba(246,239,220,0.55);}
+  .peg-key{width:32px; height:36px; position:relative; display:flex; align-items:center; justify-content:center; font-size:8.5px; font-weight:800; color:#2B2013; border-radius:7px;}
+  .peg-key::before{content:""; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:7px; height:7px; border-radius:50%; border:2.5px solid currentColor; background:transparent;}
+  .peg-tersedia .peg-key{background:var(--marigold); color:#2B2013;}
+  .peg-terisi .peg-hook{background:transparent;}
+  .peg-terisi .peg-key{width:26px; height:13px; border-radius:7px; background:transparent; border:2px dashed rgba(246,239,220,0.4); color:rgba(246,239,220,0.5); font-size:7px;}
+  .peg-bersih .peg-key{background:#DDD1AC; color:#4A2D19;}
+  .peg-label{font-size:9px; color:rgba(246,239,220,0.85); font-weight:700;}
+  .peg-foot{display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(246,239,220,0.2); padding-top:14px;}
+  .peg-foot .amt{color:var(--marigold); font-size:16px; font-weight:800; font-family:'Zilla Slab',serif;}
+  .peg-foot .lbl{color:rgba(246,239,220,0.7); font-size:10px;}
+
+  /* ---- Page 2: Fitur — passport stamps ---- */
+  .stamps-page{align-items:center; background:#D2B48C;}
+  .stamps-head{text-align:center; max-width:560px; margin:0 auto 40px;}
+  .stamps-head h2{font-size:clamp(1.5rem,3vw,2.1rem); margin:14px 0 10px;}
+  .stamps-head p{color:var(--ink-soft); font-size:14.5px;}
+  .stamps-row{display:flex; gap:36px; justify-content:center; flex-wrap:wrap; max-width:900px; margin:0 auto;}
+  .stamp{
+    width:220px; text-align:center; padding:22px 16px;
+    border:3px solid var(--clay); border-radius:50%/18%;
+    color:var(--clay); transform:rotate(var(--r,0deg));
+    position:relative;
+  }
+  .stamp:nth-child(1){--r:-6deg; border-color:var(--leaf); color:var(--leaf-deep);}
+  .stamp:nth-child(2){--r:4deg; border-color:var(--marigold-deep); color:var(--marigold-deep);}
+  .stamp:nth-child(3){--r:-3deg; border-color:var(--clay); color:var(--clay);}
+  .stamp .icon{font-size:26px; margin-bottom:8px;}
+  .stamp h3{font-size:14.5px; font-family:'Nunito',sans-serif; font-weight:800; color:inherit; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.03em;}
+  .stamp p{font-size:11.5px; color:var(--ink-soft); font-family:'Nunito',sans-serif;}
+
+  /* ---- Page 3: Harga — Modern Price Cards (background diperbarui) ---- */
+  .price-page{
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    background: linear-gradient(180deg, #FBF6E9 0%, #F6EFDC 45%, #ECDDB9 100%);
+    background-image:
+      radial-gradient(circle at 12% 10%, rgba(227,168,87,0.22) 0%, transparent 42%),
+      radial-gradient(circle at 88% 8%, rgba(79,121,66,0.14) 0%, transparent 40%),
+      radial-gradient(circle at 90% 92%, rgba(181,83,60,0.13) 0%, transparent 45%),
+      radial-gradient(circle at 8% 90%, rgba(107,66,38,0.10) 0%, transparent 40%);
+  }
+  .price-page::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: url('https://www.transparenttextures.com/patterns/rice-paper-3.png');
+    opacity:0.35;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .price-page::after{
+    content:"";
+    position:absolute; top:-120px; left:50%; transform:translateX(-50%);
+    width:640px; height:320px; border-radius:50%;
+    background:radial-gradient(circle, rgba(227,168,87,0.35) 0%, transparent 70%);
+    filter:blur(10px);
+    pointer-events:none;
+  }
+  .price-container{position:relative; z-index:1; width:100%; max-width:850px; margin:0 auto;}
+  .bubble-title {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(227,168,87,0.15);
+    border-radius: 50px;
+    color: var(--marigold);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    margin-bottom: 15px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .price-sub{
+    text-align:center; color:white; font-size:16px; font-weight:400;
+    margin:0 auto 40px; max-width:600px;
+    opacity:0.8; font-style:italic;
+  }
+  .price-cards{display:flex; gap:24px; justify-content:center; flex-wrap:wrap;}
+  .price-card{
+    background:var(--panel); border:2px solid var(--paper-deep); border-radius:24px; padding:40px;
+    flex:1; min-width:300px; display:flex; flex-direction:column;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .price-card:hover{transform:translateY(-5px); box-shadow:0 15px 30px rgba(43,32,19,0.1);}
+  .price-card.premium{border-color:var(--marigold); position:relative; box-shadow:0 10px 25px rgba(227,168,87,0.15);}
+  .price-card.premium::before{
+    content:"TERPOPULER"; position:absolute; top:-12px; right:20px;
+    background:var(--marigold); color:#2B2013; font-size:10px; font-weight:800;
+    padding:4px 12px; border-radius:6px; letter-spacing:0.05em;
+  }
+  .price-card h3{font-size:20px; margin-bottom:8px;}
+  .price-card .price{font-family:'Zilla Slab',serif; font-size:36px; font-weight:700; color:var(--leaf-deep); margin:20px 0;}
+  .price-card .price span{font-family:'Nunito',sans-serif; font-size:14px; font-weight:600; color:var(--ink-soft);}
+  .price-card ul{list-style:none; margin:0 0 30px; flex-grow:1;}
+  .price-card ul li{margin-bottom:12px; font-size:14px; color:var(--ink-soft); display:flex; align-items:center; gap:8px;}
+  .price-card ul li::before{content:"✓"; color:var(--leaf);}
+
+  /* ---- Page 4: Closing ---- */
+  .closing-page{
+    align-items:center; justify-content:center; text-align:center;
+    position:relative;
+    color:#F6EFDC;
+    /* Background estetik: Gambar + Gradient + Grain effect */
+    background:
+      linear-gradient(135deg, rgba(43,32,19,0.85), rgba(20,14,8,0.95)),
+      url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+  }
+  .closing-page::after{
+    content:""; position:absolute; inset:0;
+    opacity:0.05;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    pointer-events:none;
+  }
+  .closing-page > *{position:relative; z-index:1;}
+  .closing-page h2{
+    font-family:'Zilla Slab', serif; font-style:italic; font-weight:600;
+    color:var(--marigold); font-size:clamp(1.7rem,3.6vw,2.6rem); max-width:560px; margin:0 auto 16px;
+    text-shadow:0 2px 12px rgba(0,0,0,0.4);
+  }
+  .closing-page p{color:rgba(246,239,220,0.85); max-width:440px; margin:0 auto 26px; font-size:14.5px;}
+  .closing-page .stamp-seal{
+    width:60px; height:60px; border-radius:50%; background:var(--marigold); color:#2B2013;
+    display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 20px;
+  }
+  .closing-foot{position:absolute; bottom:20px; left:0; width:100%; color:rgba(246,239,220,0.6); font-size:12px;}
+  @media(max-width:760px){
+    .closing-page{background-attachment:scroll;}
+  }
+
+  /* ============ Book chrome: index tabs + arrows ============ */
+  .tabs-index{
+    position:fixed; right:0; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; z-index:20;
+  }
+  .tab-idx{
+    background:var(--paper-deep); border:none; border-radius:8px 0 0 8px;
+    padding:12px 10px; font-size:11px; font-weight:800; color:var(--ink-soft);
+    writing-mode:vertical-rl; text-orientation:mixed;
+    border-top:2px solid var(--paper); box-shadow:-2px 0 6px rgba(0,0,0,0.08);
+  }
+  .tab-idx.active{background:var(--marigold); color:#2B2013;}
+
+  .nav-arrows{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    display:flex; gap:14px; align-items:center; z-index:20;
+  }
+  .nav-arrows button{
+    width:40px; height:40px; border-radius:50%; border:2px solid var(--teak);
+    background:var(--panel); color:var(--teak-deep); font-size:18px; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .nav-arrows button:hover{background:var(--marigold); border-color:var(--marigold-deep);}
+  .dots{display:flex; gap:7px;}
+  .dot{width:8px; height:8px; border-radius:50%; background:rgba(107,90,68,0.3);}
+  .dot.active{background:var(--teak-deep);}
+
+  @media(max-width:760px){
+    body{overflow:auto;}
+    .book{height:auto; overflow-x:visible; overflow-y:visible; display:block; scroll-snap-type:none;}
+    .page{height:auto; min-height:100vh; padding:70px 6vw 90px;}
+    .tabs-index{display:none;}
+    .kunci-wrap{flex-direction:column;}
+    .stamps-row{gap:22px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="book" id="book">
+
+  <!-- PAGE 0 — Cover -->
+  <section class="page cover" id="p0">
+    <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
+        <span style="font-size:1.5rem; font-weight:800; color:#F6EFDC;">StayNest</span>
+        <a href="{{ route('login') }}" style="color:#F6EFDC; font-size:14px; font-weight:600; padding:8px 16px; border:1px solid rgba(246,239,220,0.3); border-radius:8px;">Masuk</a>
+    </header>
+
+    <span class="eyebrow" style="background:rgba(227,168,87,0.2); color:#E3A857;">SELAMAT DATANG</span>
+    <h1>StayNest</h1>
+    <p>Teman kelola homestay keluarga — kamar, tamu, dan uang masuk, serapi papan kunci di meja resepsionis.</p>
+    <button class="btn btn-leaf" onclick="goTo(1)">Buka Halaman Pertama →</button>
+    <p class="hint">Geser ke samping, atau pakai tab di kanan layar</p>
+  </section>
+
+  <!-- PAGE 1 — Papan Kunci -->
+  <section class="page kunci-page" id="p1">
+    <div class="kunci-wrap">
+      <div class="pegboard">
+        <div class="pegboard-head">
+          <div><h3>Papan Kunci Hari Ini</h3><p>Homestay Kaliurang · <span id="todayDate">{{ date('l, j M') }}</span></p></div>
+          <span class="pill-live">TERBARU</span>
         </div>
+        <div class="peg-grid">
+          <div class="peg peg-terisi"><div class="peg-hook"></div><div class="peg-key">luar</div><div class="peg-label">01</div></div>
+          <div class="peg peg-terisi"><div class="peg-hook"></div><div class="peg-key">luar</div><div class="peg-label">02</div></div>
+          <div class="peg peg-bersih"><div class="peg-hook"></div><div class="peg-key">🧹</div><div class="peg-label">03</div></div>
+          <div class="peg peg-tersedia"><div class="peg-hook"></div><div class="peg-key">🔑</div><div class="peg-label">04</div></div>
+          <div class="peg peg-terisi"><div class="peg-hook"></div><div class="peg-key">luar</div><div class="peg-label">05</div></div>
+          <div class="peg peg-terisi"><div class="peg-hook"></div><div class="peg-key">luar</div><div class="peg-label">06</div></div>
+          <div class="peg peg-terisi"><div class="peg-hook"></div><div class="peg-key">luar</div><div class="peg-label">07</div></div>
+          <div class="peg peg-terisi"><div class="peg-hook"></div><div class="peg-key">luar</div><div class="peg-label">08</div></div>
+        </div>
+        <div class="peg-foot">
+          <div><p class="amt">Rp 12.850.000</p><p class="lbl">Pendapatan bulan ini</p></div>
+          <div class="lbl">7 dari 8 terisi</div>
+        </div>
+      </div>
+      <div class="kunci-copy">
+        <span class="eyebrow"> Contoh Ruang Kerja</span>
+        <h2>Cukup lihat papan kunci, langsung tahu kamar mana yang kosong.</h2>
+        <b>Gantungan kunci berisi berarti kamar tersedia untuk tamu baru. Gantungan kunci kosong berarti kamar sedang terisi. Cek status kamar secara real-time dan pantau okupansi homestay Anda dengan lebih akurat.</b>
+      </div>
     </div>
+    <span class="page-num">Papan Kunci</span>
+  </section>
+
+  <!-- PAGE 2 — Fitur -->
+  <section class="page stamps-page" id="p2">
+    <div class="stamps-head">
+      <span class="eyebrow">Cap Fitur</span>
+      <h2>Tiga hal yang paling sering bikin repot, sudah dirapikan</h2>
+      <b>Dibuat sesuai kebiasaan homestay keluarga — sederhana, bukan software untuk hotel besar.</b>
+    </div>
+    <div class="stamps-row">
+      <div class="stamp">
+        <div class="icon">🛏️</div>
+        <h3>Status Kamar Update</h3>
+        <p>Tandai kosong, terisi, atau dibersihkan langsung dari HP.</p>
+      </div>
+      <div class="stamp">
+        <div class="icon">📖</div>
+        <h3>Tanpa Booking Ganda</h3>
+        <p>Tanggal dicek otomatis sebelum reservasi tersimpan.</p>
+      </div>
+      <div class="stamp">
+        <div class="icon">👨‍👩‍👧</div>
+        <h3>Dipakai Bareng Keluarga</h3>
+        <p>Ajak staf atau keluarga, akses bisa dibatasi per orang.</p>
+      </div>
+    </div>
+    <span class="page-num">Fitur</span>
+  </section>
+
+  <!-- PAGE 3 — Harga -->
+  <section class="page price-page" id="p3">
+    <div class="price-container">
+      <h2 class="bubble-title">Pilih Paket Sesuai Kebutuhan Homestay Anda</h2>
+      <p class="price-sub">Semua paket sudah termasuk manajemen kamar, buku tamu digital, dan laporan bulanan untuk pengelolaan yang lebih efisien.</p>
+
+      <div class="price-cards">
+        <div class="price-card">
+          <h3>Paket Hemat</h3>
+          <div class="price">Rp 199K<span>/ bulan</span></div>
+          <ul>
+            <li>Sampai 4 kamar</li>
+            <li>2 akun keluarga/staf</li>
+            <li>Manajemen Reservasi</li>
+          </ul>
+          <a href="{{ route('register', ['plan' => 'hemat']) }}" class="btn btn-outline">Pilih Hemat</a>
+        </div>
+
+        <div class="price-card premium">
+          <h3>Paket Lengkap</h3>
+          <div class="price">Rp 499K<span>/ bulan</span></div>
+          <ul>
+            <li>Kamar tidak terbatas</li>
+            <li>Akun staf tanpa batas</li>
+            <li>Laporan keuangan lengkap</li>
+            <li>Multi-properti</li>
+          </ul>
+          <a href="{{ route('register', ['plan' => 'lengkap']) }}" class="btn btn-leaf">Pilih Lengkap</a>
+        </div>
+      </div>
+    </div>
+    <span class="page-num">Harga (berlangganan)</span>
+  </section>
+
+  <!-- PAGE 4 — Closing -->
+  <section class="page closing-page" id="p4">
+    <!-- <div class="stamp-seal">💌</div> -->
+    <span class="eyebrow" style="background:rgba(227,168,87,0.2); color:#E3A857;">HOMESTAY</span>
+    <h2>Kamar yang Anda tandai malam ini bisa jadi yang terakhir kali dicatat di kertas.</h2>
+    <p>Tidak perlu kartu kredit. Coba dulu 14 hari, batalkan kapan saja.</p>
+    <a href="{{ route('register') }}" class="btn btn-leaf">Coba Gratis Sekarang</a>
+    <p class="closing-foot">© 2026 StayNest — Teman kelola homestay keluarga.</p>
+    <span class="page-num"></span>
+  </section>
+
 </div>
 
-<!-- Features Section -->
-<div id="features" class="py-24 bg-slate-50 border-y border-slate-100">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-base font-semibold text-indigo-600 uppercase tracking-wide">Fitur Unggulan</h2>
-            <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900">
-                Solusi All-in-One Pengelolaan Homestay Modern
-            </p>
-            <p class="mt-4 text-slate-600">
-                Lupakan pencatatan manual di kertas yang rawan hilang dan membingungkan. Kelola semua operasi dalam satu dasbor responsif.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Room Management -->
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-                <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-6 font-bold text-xl">🛏️</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">Manajemen Kamar</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Kelola status kamar secara real-time (Tersedia, Terisi, Perawatan). Atur harga per malam dan jenis kamar dengan fleksibel.
-                </p>
-            </div>
-
-            <!-- Booking & Overbooking Prevention -->
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-                <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-6 font-bold text-xl">📅</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">Sistem Reservasi & Validasi</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Sistem otomatis memeriksa ketersediaan kamar pada tanggal yang dipilih untuk mencegah terjadinya pemesanan ganda (overbooking).
-                </p>
-            </div>
-
-            <!-- Multi-Tenant Role Access -->
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
-                <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-6 font-bold text-xl">👥</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">Multi-Tenant & Hak Akses</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Setiap homestay terisolasi aman. Pemilik (Owner) dapat mengundang Staff dengan hak akses terbatas sesuai tugas operasional.
-                </p>
-            </div>
-        </div>
-    </div>
+<div class="tabs-index" id="tabs">
+  <button class="tab-idx active" data-i="0">Sampul</button>
+  <button class="tab-idx" data-i="1">Kunci</button>
+  <button class="tab-idx" data-i="2">Fitur</button>
+  <button class="tab-idx" data-i="3">Harga</button>
+  <button class="tab-idx" data-i="4">Mulai</button>
 </div>
 
-<!-- Pricing Section -->
-<div id="pricing" class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-base font-semibold text-indigo-600 uppercase tracking-wide">Pilihan Harga</h2>
-            <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900">
-                Pilih Paket yang Sesuai Kebutuhan Homestay Anda
-            </p>
-            <p class="mt-4 text-slate-600">
-                Semua paket dilengkapi dengan fitur dasar manajemen kamar, reservasi, pembayaran, dan laporan bulanan.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Free Plan -->
-            <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:shadow-lg transition">
-                <div>
-                    <h3 class="text-2xl font-bold text-slate-900">Paket Basic</h3>
-                    <p class="mt-2 text-sm text-slate-500">Cocok untuk homestay kecil yang baru memulai digitalisasi.</p>
-                    <p class="mt-6 flex items-baseline">
-                        <span class="text-5xl font-black tracking-tight text-slate-900">Rp 199K</span>
-                        <span class="ml-1 text-sm font-semibold text-slate-500">/ bulan</span>
-                    </p>
-                    <ul class="mt-8 space-y-4 text-sm text-slate-600">
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Maksimal 10 Kamar</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Akses untuk 2 Staff</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Manajemen Tamu & Pembayaran</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Pencegahan Overbooking</span>
-                        </li>
-                    </ul>
-                </div>
-                <a href="{{ route('register') }}" class="mt-8 block w-full text-center py-3 px-4 rounded-xl border border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-bold transition">
-                    Mulai Sekarang
-                </a>
-            </div>
-
-            <!-- Pro Plan -->
-            <div class="bg-white p-8 rounded-3xl border-2 border-indigo-600 flex flex-col justify-between hover:shadow-lg transition relative">
-                <div class="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 bg-indigo-600 text-white text-xs font-bold rounded-full uppercase tracking-wider">
-                    Terpopuler
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-slate-900">Paket Premium</h3>
-                    <p class="mt-2 text-sm text-slate-500">Sempurna untuk homestay skala menengah ke atas dengan banyak cabang.</p>
-                    <p class="mt-6 flex items-baseline">
-                        <span class="text-5xl font-black tracking-tight text-slate-900">Rp 499K</span>
-                        <span class="ml-1 text-sm font-semibold text-slate-500">/ bulan</span>
-                    </p>
-                    <ul class="mt-8 space-y-4 text-sm text-slate-600">
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Kamar Tidak Terbatas</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Staff Tidak Terbatas</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Laporan Keuangan & Grafik Analisis</span>
-                        </li>
-                        <li class="flex items-center space-x-3">
-                            <span class="text-emerald-500 font-bold">✓</span>
-                            <span>Invoice Kustom & Pencetakan Struk</span>
-                        </li>
-                    </ul>
-                </div>
-                <a href="{{ route('register') }}" class="mt-8 block w-full text-center py-3 px-4 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 font-bold transition shadow-md shadow-indigo-600/20">
-                    Daftar Sekarang
-                </a>
-            </div>
-        </div>
-    </div>
+<div class="nav-arrows">
+  <button id="prevBtn" aria-label="Halaman sebelumnya">‹</button>
+  <div class="dots" id="dots">
+    <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+  <button id="nextBtn" aria-label="Halaman berikutnya">›</button>
 </div>
-@endsection
+
+<script>
+  const book = document.getElementById('book');
+  const pages = [...document.querySelectorAll('.page')];
+  const tabs = [...document.querySelectorAll('.tab-idx')];
+  const dots = [...document.querySelectorAll('.dot')];
+  let current = 0;
+
+  function goTo(i){
+    i = Math.max(0, Math.min(pages.length - 1, i));
+    if (window.innerWidth > 760){
+      book.scrollTo({left: i * book.clientWidth, behavior:'smooth'});
+    } else {
+      pages[i].scrollIntoView({behavior:'smooth'});
+    }
+    setActive(i);
+  }
+  function setActive(i){
+    current = i;
+    tabs.forEach((t, idx) => t.classList.toggle('active', idx === i));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+  }
+  tabs.forEach(t => t.addEventListener('click', () => goTo(parseInt(t.dataset.i))));
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+
+  let scrollTimeout;
+  book.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const idx = Math.round(book.scrollLeft / book.clientWidth);
+      setActive(idx);
+    }, 100);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>

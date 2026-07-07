@@ -57,6 +57,9 @@ class DashboardController extends Controller
         // Room status summary for visual grid
         $rooms = Room::orderBy('room_number')->get();
 
+        // Get homestay plan to show upgrade/payment notifications
+        $homestay = auth()->user()->homestay;
+
         return view('dashboard', compact(
             'totalRooms',
             'availableRooms',
@@ -68,7 +71,8 @@ class DashboardController extends Controller
             'todayCheckins',
             'todayCheckouts',
             'recentReservations',
-            'rooms'
+            'rooms',
+            'homestay' // Pass the homestay model
         ));
     }
 }

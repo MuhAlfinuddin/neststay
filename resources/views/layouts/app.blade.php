@@ -36,7 +36,7 @@
             <div class="px-6 py-4 border-b border-slate-800 bg-slate-950/40">
                 <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Tenant / Homestay</p>
                 <p class="text-sm font-bold truncate mt-1 text-slate-200">
-                    {{ auth()->user()->role === 'super_admin' ? 'Platform Administrator' : auth()->user()->homestay->name }}
+                    {{ auth()->user()->role === 'super_admin' ? 'Platform Administrator' : optional(auth()->user()->homestay)->name ?? 'Homestay' }}
                 </p>
                 <div class="flex items-center mt-2 space-x-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
@@ -111,7 +111,7 @@
                     <p class="text-xs text-slate-400 uppercase font-semibold">{{ auth()->user()->role }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 font-extrabold flex items-center justify-center">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
+                    {{ strtoupper(mb_substr(auth()->user()->name, 0, 2)) }}
                 </div>
             </div>
         </header>

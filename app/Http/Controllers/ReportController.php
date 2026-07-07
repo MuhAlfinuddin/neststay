@@ -24,8 +24,13 @@ class ReportController extends Controller
         $totalRevenue = Payment::where('payment_status', 'paid')->sum('amount');
         
         // 2. Monthly Revenue Data for Chart (current year)
+        $driver = DB::connection()->getDriverName();
+        $monthExpr = $driver === 'mysql'
+            ? DB::raw("DATE_FORMAT(payment_date, '%m') as month")
+            : DB::raw("strftime('%m', payment_date) as month");
+
         $monthlyRevenue = Payment::select(
-                DB::raw('strftime("%m", payment_date) as month'),
+                $monthExpr,
                 DB::raw('SUM(amount) as total')
             )
             ->whereYear('payment_date', $year)

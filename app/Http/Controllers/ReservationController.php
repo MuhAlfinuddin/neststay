@@ -84,7 +84,7 @@ class ReservationController extends Controller
 
     public function edit(Reservation $reservation)
     {
-        $rooms = Room::orderBy('room_number')->get();
+        $rooms = Room::where('status', '!=', 'maintenance')->orderBy('room_number')->get();
         $guests = Guest::orderBy('name')->get();
         return view('reservations.edit', compact('reservation', 'rooms', 'guests'));
     }
@@ -163,8 +163,8 @@ class ReservationController extends Controller
 
         $reservation->update(['status' => 'checked_out']);
         
-        // Mark room as available
-        $reservation->room->update(['status' => 'available']);
+        // Recalculate room status based on all active reservations
+        $this->updateRoomStatus($reservation->room);
 
         return back()->with('success', 'Tamu berhasil check-out! Status kamar diset menjadi Tersedia (Available).');
     }

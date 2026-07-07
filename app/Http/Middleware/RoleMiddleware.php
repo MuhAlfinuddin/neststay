@@ -27,7 +27,7 @@ class RoleMiddleware
         // Check if the user's role is in the permitted roles list
         if (in_array($user->role, $roles)) {
             // Also check if owner/staff has active homestay status
-            if ($user->role !== 'super_admin' && $user->homestay) {
+            if ($user->role !== 'super_admin' && $user->homestay !== null) {
                 if ($user->homestay->status !== 'active') {
                     auth()->logout();
                     return redirect()->route('login')->withErrors([

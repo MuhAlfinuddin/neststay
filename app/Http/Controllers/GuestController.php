@@ -42,7 +42,7 @@ class GuestController extends Controller
 
         $homestayId = auth()->user()->homestay_id;
 
-        Guest::create(array_merge($request->all(), ['homestay_id' => $homestayId]));
+        Guest::create(array_merge($request->only(['name', 'email', 'phone', 'identity_number']), ['homestay_id' => $homestayId]));
 
         return redirect()->route('guests.index')->with('success', 'Data tamu berhasil ditambahkan!');
     }
@@ -61,7 +61,7 @@ class GuestController extends Controller
             'identity_number' => ['required', 'string', 'max:50'],
         ]);
 
-        $guest->update($request->all());
+        $guest->update($request->only(['name', 'email', 'phone', 'identity_number']));
 
         return redirect()->route('guests.index')->with('success', 'Data tamu berhasil diperbarui!');
     }

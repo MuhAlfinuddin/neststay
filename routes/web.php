@@ -42,7 +42,8 @@ Route::middleware(['auth', 'role:owner,staff'])->group(function () {
     
     // Payments
     Route::resource('payments', PaymentController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
-    
+    Route::post('/payments/activate', [PaymentController::class, 'activateSubscription'])->name('payments.activate');
+
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
@@ -56,6 +57,6 @@ Route::middleware(['auth', 'role:owner'])->group(function () {
 // 4. Scoped Authenticated Routes (Super Admin Only)
 Route::middleware(['auth', 'role:super_admin'])->prefix('super-admin')->name('super-admin.')->group(function () {
     Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/homestays', [SuperAdminController::class, 'dashboard'])->name('homestays.index');
+    Route::get('/homestays', [SuperAdminController::class, 'homestays'])->name('homestays.index');
     Route::post('/homestays/{homestay}/toggle-status', [SuperAdminController::class, 'toggleStatus'])->name('homestays.toggle-status');
 });
