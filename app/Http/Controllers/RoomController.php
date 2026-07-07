@@ -30,8 +30,14 @@ class RoomController extends Controller
     {
         $user = auth()->user();
         $homestay = $user->homestay;
+        $roomCount = $homestay->rooms()->count();
 
-        if ($homestay->plan === 'hemat' && $homestay->rooms()->count() >= 4) {
+        // Plan limitation check
+        if ($homestay->subscription_status !== 'active') {
+            if ($roomCount >= 2) {
+                return redirect()->route('rooms.index')->with('error', 'Gagal menambah kamar. Silakan selesaikan pembayaran untuk menambah kamar lebih dari 2.');
+            }
+        } elseif ($homestay->plan === 'hemat' && $roomCount >= 4) {
             return redirect()->route('rooms.index')->with('error', 'Gagal menambah kamar. Paket Hemat hanya mendukung maksimal 4 kamar.');
         }
 
@@ -42,10 +48,15 @@ class RoomController extends Controller
     {
         $user = auth()->user();
         $homestay = $user->homestay;
+        $roomCount = $homestay->rooms()->count();
 
         // Plan limitation check
-        if ($homestay->plan === 'hemat' && $homestay->rooms()->count() >= 4) {
-            return back()->with('error', 'Gagal menambah kamar. Paket Hemat hanya mendukung maksimal 4 kamar. Silakan upgrade ke Paket Lengkap untuk menambah lebih banyak kamar.');
+        if ($homestay->subscription_status !== 'active') {
+            if ($roomCount >= 2) {
+                return back()->with('error', 'Gagal menambah kamar. Silakan selesaikan pembayaran untuk menambah kamar lebih dari 2.');
+            }
+        } elseif ($homestay->plan === 'hemat' && $roomCount >= 4) {
+            return back()->with('error', 'Gagal menambah kamar. Paket Hemat hanya mendukung maksimal 4 kamar.');
         }
 
         $request->validate([

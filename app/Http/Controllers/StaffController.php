@@ -19,6 +19,7 @@ class StaffController extends Controller
 
         $homestayId = auth()->user()->homestay_id;
 
+        // Retrieve other users belonging to the same homestay having 'staff' role
         $staffs = User::where('homestay_id', $homestayId)
             ->where('role', 'staff')
             ->latest()
@@ -38,13 +39,15 @@ class StaffController extends Controller
 
         $user = auth()->user();
         $homestay = $user->homestay;
+        $staffCount = $homestay->users()->where('role', 'staff')->count();
 
-        // Plan limitation check: Paksa batasan 2 staff untuk Paket Hemat
-        if ($homestay->plan === 'hemat') {
-            $currentStaffCount = User::where('homestay_id', $homestay->id)->where('role', 'staff')->count();
-            if ($currentStaffCount >= 2) {
-                return redirect()->route('staff.index')->with('error', 'Gagal menambah staff. Paket Hemat hanya mendukung maksimal 2 akun staff.');
+        // Plan limitation check
+        if ($homestay->subscription_status !== 'active') {
+            if ($staffCount >= 1) {
+                return redirect()->route('staff.index')->with('error', 'Gagal menambah staff. Silakan selesaikan pembayaran untuk menambah staff lebih dari 1.');
             }
+        } elseif ($homestay->plan === 'hemat' && $staffCount >= 2) {
+            return redirect()->route('staff.index')->with('error', 'Gagal menambah staff. Paket Hemat hanya mendukung maksimal 2 akun staff.');
         }
 
         return view('staff.create');
@@ -61,13 +64,15 @@ class StaffController extends Controller
 
         $user = auth()->user();
         $homestay = $user->homestay;
+        $staffCount = $homestay->users()->where('role', 'staff')->count();
 
-        // Plan limitation check
-        if ($homestay->plan === 'hemat') {
-            $currentStaffCount = User::where('homestay_id', $homestay->id)->where('role', 'staff')->count();
-            if ($currentStaffCount >= 2) {
-                return back()->with('error', 'Gagal menambah staff. Paket Hemat hanya mendukung maksimal 2 akun staff.');
+        // Plan limitation check (server-side security)
+        if ($homestay->subscription_status !== 'active') {
+            if ($staffCount >= 1) {
+                return back()->with('error', 'Gagal menambah staff. Silakan selesaikan pembayaran untuk menambah staff lebih dari 1.');
             }
+        } elseif ($homestay->plan === 'hemat' && $staffCount >= 2) {
+            return back()->with('error', 'Gagal menambah staff. Paket Hemat hanya mendukung maksimal 2 akun staff.');
         }
 
         $request->validate([

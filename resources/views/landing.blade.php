@@ -220,7 +220,7 @@
     /* Background estetik: Gambar + Gradient + Grain effect */
     background:
       linear-gradient(135deg, rgba(43,32,19,0.85), rgba(20,14,8,0.95)),
-      url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop');
+      url('/img/GambarOm.png');
     background-size:cover;
     background-position:center;
   }

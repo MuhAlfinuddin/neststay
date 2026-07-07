@@ -15,7 +15,7 @@
                 </div>
                 <form action="{{ route('payments.activate') }}" method="POST">
                     @csrf
-                    <button type="submit" class="ml-auto whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-lg transition">
+                    <button type="submit" class="ml-auto whitespace-nowrap inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-full shadow transition transform hover:scale-105">
                         Bayar Sekarang
                     </button>
                 </form>
@@ -228,7 +228,7 @@
                         @foreach ($todayCheckouts as $checkout)
                             <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 flex justify-between items-center">
                                 <div>
-                                    <p class="font-bold text-slate-800">{{ $checkout->guest->name }}</p>
+                                    <p class="font-bold text-checkout->guest->name }}</p>
                                     <p class="text-xs text-slate-500 mt-1">Kamar {{ $checkout->room->room_number }} ({{ $checkout->room->room_type }})</p>
                                 </div>
                                 <form action="{{ route('reservations.check-out', $checkout->id) }}" method="POST">

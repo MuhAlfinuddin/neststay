@@ -78,10 +78,11 @@ class AuthController extends Controller
             'homestay_name' => ['required', 'string', 'max:255'],
             'homestay_address' => ['required', 'string'],
             'homestay_phone' => ['required', 'string', 'max:20', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
+            'plan' => ['required', 'string', 'in:hemat,lengkap'],
         ]);
 
         $slug = Str::slug($request->homestay_name);
-        
+
         // Ensure slug is unique
         $originalSlug = $slug;
         $count = 1;
@@ -99,6 +100,7 @@ class AuthController extends Controller
                     'phone' => $request->homestay_phone,
                     'slug' => $slug,
                     'status' => 'active',
+                    'plan' => $request->plan, // <--- INI KUNCI NYA
                 ]);
 
                 // Create Owner User linked to Homestay

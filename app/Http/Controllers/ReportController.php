@@ -16,6 +16,14 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+        $homestay = $user->homestay;
+
+        // Plan limitation check: Hanya untuk Paket Lengkap DAN harus aktif
+        if ($homestay->plan !== 'lengkap' || $homestay->subscription_status !== 'active') {
+            return redirect()->route('dashboard')->with('error', 'Fitur Laporan Keuangan Lengkap hanya tersedia untuk Paket Lengkap yang sudah aktif. Silakan selesaikan pembayaran.');
+        }
+
         $year = $request->query('year', Carbon::now()->year);
 
         // 1. Overall stats

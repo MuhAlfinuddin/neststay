@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-black text-slate-900">Laporan Keuangan & Okupansi</h1>
             <p class="text-xs text-slate-500 mt-1">Analisis kinerja bisnis homestay Anda berdasarkan data historis transaksi.</p>
         </div>
-        
+
         <!-- Year filter -->
         <form action="{{ route('reports.index') }}" method="GET" class="flex items-center space-x-2">
             <label for="year" class="text-xs font-semibold text-slate-400 uppercase">Tahun:</label>
@@ -23,26 +23,29 @@
     </div>
 
     <!-- Cards Summary Row -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Total Revenue -->
         <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Pendapatan Terkumpul</span>
-            <h3 class="text-3xl font-black text-slate-900 mt-2">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
-            <p class="text-xs text-slate-400 mt-2">Akumulasi dari seluruh transaksi status Lunas (Paid).</p>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Pendapatan</span>
+            <h3 class="text-2xl font-black text-slate-900 mt-2">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
         </div>
 
         <!-- Total Bookings -->
         <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Reservasi Terdaftar</span>
-            <h3 class="text-3xl font-black text-slate-900 mt-2">{{ $totalReservations }} Kali Booking</h3>
-            <p class="text-xs text-slate-400 mt-2">Termasuk status check-in, check-out, pending, dan confirmed.</p>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Reservasi</span>
+            <h3 class="text-2xl font-black text-slate-900 mt-2">{{ $totalReservations }}</h3>
         </div>
 
         <!-- Total Rooms -->
         <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Kapasitas Kamar</span>
-            <h3 class="text-3xl font-black text-slate-900 mt-2">{{ $totalRooms }} Unit Kamar</h3>
-            <p class="text-xs text-slate-400 mt-2">Aset aktif yang terdaftar dalam inventaris homestay.</p>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Kamar</span>
+            <h3 class="text-2xl font-black text-slate-900 mt-2">{{ $totalRooms }}</h3>
+        </div>
+
+        <!-- Active Reservations -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Reservasi Aktif</span>
+            <h3 class="text-2xl font-black text-slate-900 mt-2">{{ $activeReservationsCount }}</h3>
         </div>
     </div>
 
@@ -67,11 +70,10 @@
                         <div class="flex justify-between items-center p-3 border border-slate-50 bg-slate-50/20 rounded-xl">
                             <div>
                                 <p class="text-sm font-bold text-slate-800">{{ $pay->reservation->guest->name }}</p>
-                                <p class="text-xs text-slate-400 mt-0.5">Kamar {{ $pay->reservation->room->room_number }} • {{ $pay->payment_method }}</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Kamar {{ $pay->reservation->room->room_number }}</p>
                             </div>
                             <div class="text-right">
                                 <p class="text-sm font-black text-indigo-600">Rp {{ number_format($pay->amount, 0, ',', '.') }}</p>
-                                <p class="text-[10px] text-slate-400">{{ $pay->payment_date->format('d M H:i') }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -86,7 +88,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const ctx = document.getElementById('revenueChart').getContext('2d');
-        const chart = new Chart(ctx, {
+        new Chart(ctx, {
             type: 'line',
             data: {
                 labels: {!! json_encode($monthLabels) !!},
@@ -106,35 +108,14 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        display: false
-                    }
+                    legend: { display: false }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            callback: function(value) {
-                                return 'Rp ' + value.toLocaleString('id-ID');
-                            },
-                            font: {
-                                family: "'Plus Jakarta Sans', sans-serif",
-                                size: 10
-                            }
-                        },
-                        grid: {
-                            color: '#f1f5f9'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                family: "'Plus Jakarta Sans', sans-serif",
-                                size: 10
-                            }
-                        },
-                        grid: {
-                            display: false
+                            callback: value => 'Rp ' + value.toLocaleString('id-ID'),
+                            font: { size: 10 }
                         }
                     }
                 }
