@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-black text-slate-900">Kelola Akun Staff</h1>
             <p class="text-xs text-slate-500 mt-1">Daftarkan akun login khusus staff operasional homestay Anda.</p>
         </div>
-        <a href="{{ route('staff.create') }}" class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-md shadow-indigo-600/10">
+        <a href="{{ route('staff.create') }}" class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
             + Tambah Akun Staff
         </a>
     </div>

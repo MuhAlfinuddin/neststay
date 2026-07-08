@@ -48,7 +48,7 @@
         <!-- Print Header Action -->
         <div class="no-print flex justify-between items-center mb-8 pb-6 border-b border-slate-100">
             <a href="javascript:window.history.back();" class="text-sm font-semibold text-indigo-600 hover:underline">← Kembali</a>
-            <button onclick="window.print();" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow">
+            <button onclick="window.print();" class="inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow">
                 🖨️ Cetak Nota (Print)
             </button>
         </div>

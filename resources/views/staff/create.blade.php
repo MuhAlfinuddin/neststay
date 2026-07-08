@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
     <div>
-        <a href="{{ route('staff.index') }}" class="text-xs font-semibold text-indigo-600 hover:underline">← Kembali ke Daftar Staff</a>
+        <a href="{{ route('staff.index') }}" class="text-xs font-semibold text-[var(--color-teak-deep)] hover:underline">← Kembali ke Daftar Staff</a>
         <h1 class="text-2xl font-black text-slate-900 mt-2">Daftar Akun Staff Baru</h1>
         <p class="text-xs text-slate-500">Buat kredensial login baru untuk staff operasional homestay Anda.</p>
     </div>
@@ -33,23 +33,23 @@
             <div class="space-y-4">
                 <div>
                     <label for="name" class="block text-sm font-semibold text-slate-700">Nama Lengkap Staff</label>
-                    <input id="name" name="name" type="text" required placeholder="Contoh: Andi Wijaya" value="{{ old('name') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input id="name" name="name" type="text" required placeholder="Contoh: Andi Wijaya" value="{{ old('name') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                 </div>
 
                 <div>
                     <label for="email" class="block text-sm font-semibold text-slate-700">Alamat Email (Username Login)</label>
-                    <input id="email" name="email" type="email" required placeholder="Contoh: andi@staynest.com" value="{{ old('email') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input id="email" name="email" type="email" required placeholder="Contoh: andi@staynest.com" value="{{ old('email') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="password" class="block text-sm font-semibold text-slate-700">Password</label>
-                        <input id="password" name="password" type="password" required placeholder="Minimal 8 karakter" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input id="password" name="password" type="password" required placeholder="Minimal 8 karakter" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                     </div>
 
                     <div>
                         <label for="password_confirmation" class="block text-sm font-semibold text-slate-700">Konfirmasi Password</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password" required placeholder="Ulangi password" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input id="password_confirmation" name="password_confirmation" type="password" required placeholder="Ulangi password" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <a href="{{ route('staff.index') }}" class="px-4 py-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
                     Batal
                 </a>
-                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-md shadow-indigo-600/10">
+                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
                     Simpan Akun Staff
                 </button>
             </div>

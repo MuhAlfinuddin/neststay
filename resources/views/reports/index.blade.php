@@ -14,7 +14,7 @@
         <!-- Year filter -->
         <form action="{{ route('reports.index') }}" method="GET" class="flex items-center space-x-2">
             <label for="year" class="text-xs font-semibold text-slate-400 uppercase">Tahun:</label>
-            <select id="year" name="year" onchange="this.form.submit()" class="appearance-none bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <select id="year" name="year" onchange="this.form.submit()" class="appearance-none bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)]">
                 @for ($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
                     <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
                 @endfor

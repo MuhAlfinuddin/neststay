@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
     <div>
-        <a href="{{ route('reservations.index') }}" class="text-xs font-semibold text-indigo-600 hover:underline">← Kembali ke Daftar Reservasi</a>
+        <a href="{{ route('reservations.index') }}" class="text-xs font-semibold text-[var(--color-teak-deep)] hover:underline">← Kembali ke Daftar Reservasi</a>
         <h1 class="text-2xl font-black text-slate-900 mt-2">Edit Reservasi Tamu: {{ $reservation->guest->name }}</h1>
         <p class="text-xs text-slate-500">Sesuaikan informasi reservasi, kamar, tanggal, atau status pemesanan.</p>
     </div>
@@ -35,7 +35,7 @@
                 <!-- Guest Selection -->
                 <div>
                     <label for="guest_id" class="block text-sm font-semibold text-slate-700">Pilih Tamu</label>
-                    <select id="guest_id" name="guest_id" required class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select id="guest_id" name="guest_id" required class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                         @foreach ($guests as $guest)
                             <option value="{{ $guest->id }}" {{ old('guest_id', $reservation->guest_id) == $guest->id ? 'selected' : '' }}>
                                 {{ $guest->name }} (NIK: {{ $guest->identity_number }})
@@ -47,7 +47,7 @@
                 <!-- Room Selection -->
                 <div>
                     <label for="room_id" class="block text-sm font-semibold text-slate-700">Pilih Kamar</label>
-                    <select id="room_id" name="room_id" required class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select id="room_id" name="room_id" required class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                         @foreach ($rooms as $room)
                             <option value="{{ $room->id }}" {{ old('room_id', $reservation->room_id) == $room->id ? 'selected' : '' }}>
                                 Kamar {{ $room->room_number }} (Tipe: {{ $room->room_type }} - Tarif: Rp {{ number_format($room->price_per_night, 0, ',', '.') }}/malam)
@@ -60,19 +60,19 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label for="check_in" class="block text-sm font-semibold text-slate-700">Tanggal Check-in</label>
-                        <input id="check_in" name="check_in" type="date" required value="{{ old('check_in', $reservation->check_in->toDateString()) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input id="check_in" name="check_in" type="date" required value="{{ old('check_in', $reservation->check_in->toDateString()) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                     </div>
 
                     <div>
                         <label for="check_out" class="block text-sm font-semibold text-slate-700">Tanggal Check-out</label>
-                        <input id="check_out" name="check_out" type="date" required value="{{ old('check_out', $reservation->check_out->toDateString()) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <input id="check_out" name="check_out" type="date" required value="{{ old('check_out', $reservation->check_out->toDateString()) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                     </div>
                 </div>
 
                 <!-- Status Selection -->
                 <div>
                     <label for="status" class="block text-sm font-semibold text-slate-700">Status Pemesanan</label>
-                    <select id="status" name="status" required class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select id="status" name="status" required class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                         <option value="pending" {{ old('status', $reservation->status) === 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="confirmed" {{ old('status', $reservation->status) === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                         <option value="checked_in" {{ old('status', $reservation->status) === 'checked_in' ? 'selected' : '' }}>Checked In</option>
@@ -86,7 +86,7 @@
                 <a href="{{ route('reservations.index') }}" class="px-4 py-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
                     Batal
                 </a>
-                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition shadow-md shadow-indigo-600/10">
+                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
                     Perbarui Reservasi
                 </button>
             </div>
