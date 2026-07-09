@@ -39,7 +39,17 @@ class PaymentController extends Controller
     {
         $request->validate([
             'reservation_id' => ['required', 'exists:reservations,id'],
-            'amount' => ['required', 'numeric', 'min:0'],
+            'amount' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) use ($request) {
+                    $reservation = Reservation::findOrFail($request->reservation_id);
+                    if ($value > $reservation->total_price) {
+                        $fail('Jumlah pembayaran tidak boleh melebihi total tagihan (Rp ' . number_format($reservation->total_price, 0, ',', '.') . ').');
+                    }
+                },
+            ],
             'payment_method' => ['required', 'string', 'in:cash,transfer,card'],
             'payment_status' => ['required', 'string', 'in:paid,down_payment,unpaid'],
             'payment_date' => ['required', 'date'],

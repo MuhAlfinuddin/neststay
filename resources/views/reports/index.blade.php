@@ -12,14 +12,19 @@
         </div>
 
         <!-- Year filter -->
-        <form action="{{ route('reports.index') }}" method="GET" class="flex items-center space-x-2">
-            <label for="year" class="text-xs font-semibold text-slate-400 uppercase">Tahun:</label>
-            <select id="year" name="year" onchange="this.form.submit()" class="appearance-none bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)]">
-                @for ($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
-                    <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
-                @endfor
-            </select>
-        </form>
+        <div class="flex items-center space-x-2">
+            <a href="{{ route('reports.pdf') }}" class="px-4 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition">
+                Export PDF
+            </a>
+            <form action="{{ route('reports.index') }}" method="GET" class="flex items-center space-x-2">
+                <label for="year" class="text-xs font-semibold text-slate-400 uppercase">Tahun:</label>
+                <select id="year" name="year" onchange="this.form.submit()" class="appearance-none bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)]">
+                    @for ($y = date('Y') - 2; $y <= date('Y') + 2; $y++)
+                        <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
+                </select>
+            </form>
+        </div>
     </div>
 
     <!-- Cards Summary Row -->

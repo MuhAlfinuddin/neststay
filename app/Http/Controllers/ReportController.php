@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Response;
+
 class ReportController extends Controller
 {
     /**
@@ -16,69 +19,55 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
+        $year = $request->input('year', date('Y'));
+
+        $payments = Payment::whereYear('payment_date', $year)
+            ->whereIn('payment_status', ['paid', 'down_payment'])
+            ->get();
+
+        $totalRevenue = $payments->sum('amount');
+        $totalReservations = Reservation::whereYear('created_at', $year)->count();
+        $totalRooms = Room::count();
+        $activeReservationsCount = Reservation::where('status', 'active')->count();
+
+        // Prepare chart data
+        $monthLabels = [];
+        $chartRevenueData = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthLabels[] = Carbon::create()->month($i)->format('M');
+            $chartRevenueData[] = $payments->filter(function ($payment) use ($i) {
+                return Carbon::parse($payment->payment_date)->month == $i;
+            })->sum('amount');
+        }
+
+        return view('reports.index', compact('payments', 'totalRevenue', 'totalReservations', 'totalRooms', 'activeReservationsCount', 'year', 'monthLabels', 'chartRevenueData'));
+    }
+
+    /**
+     * Export monthly revenue to PDF.
+     */
+    public function exportPdf()
+    {
         $user = auth()->user();
         $homestay = $user->homestay;
 
-        // Plan limitation check: Hanya untuk Paket Lengkap DAN harus aktif
+        // Plan limitation check
         if ($homestay->plan !== 'lengkap' || $homestay->subscription_status !== 'active') {
-            return redirect()->route('dashboard')->with('error', 'Fitur Laporan Keuangan Lengkap hanya tersedia untuk Paket Lengkap yang sudah aktif. Silakan selesaikan pembayaran.');
+            return redirect()->route('dashboard')->with('error', 'Fitur Export PDF hanya tersedia untuk Paket Lengkap.');
         }
 
-        $year = $request->query('year', Carbon::now()->year);
-
-        // 1. Overall stats
-        $totalRooms = Room::count();
-        $totalReservations = Reservation::count();
-        $totalRevenue = Payment::where('payment_status', 'paid')->sum('amount');
-        
-        // 2. Monthly Revenue Data for Chart (current year)
-        $driver = DB::connection()->getDriverName();
-        $monthExpr = $driver === 'mysql'
-            ? DB::raw("DATE_FORMAT(payment_date, '%m') as month")
-            : DB::raw("strftime('%m', payment_date) as month");
-
-        $monthlyRevenue = Payment::select(
-                $monthExpr,
-                DB::raw('SUM(amount) as total')
-            )
-            ->whereYear('payment_date', $year)
-            ->where('payment_status', 'paid')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get()
-            ->pluck('total', 'month')
-            ->toArray();
-
-        // Standardize monthly array for Chart.js
-        $months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-        $chartRevenueData = [];
-        $monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
-
-        foreach ($months as $month) {
-            $chartRevenueData[] = $monthlyRevenue[$month] ?? 0;
-        }
-
-        // 3. Occupancy Rate Data
-        // Total occupied days = Sum of diff in days for check-in and check-out in this year
-        // We will calculate a simple occupancy check:
-        $activeReservationsCount = Reservation::whereIn('status', ['confirmed', 'checked_in', 'checked_out'])->count();
-        
-        // 4. Recent transaction logs
-        $payments = Payment::with(['reservation.guest'])
+        $payments = Payment::with(['reservation.guest', 'reservation.room'])
             ->where('payment_status', 'paid')
             ->orderBy('payment_date', 'desc')
-            ->limit(10)
             ->get();
 
-        return view('reports.index', compact(
-            'year',
-            'totalRooms',
-            'totalReservations',
-            'totalRevenue',
-            'chartRevenueData',
-            'monthLabels',
-            'activeReservationsCount',
-            'payments'
-        ));
+        $data = [
+            'payments' => $payments,
+            'totalRevenue' => $payments->sum('amount'),
+            'date' => Carbon::now()->format('d M Y')
+        ];
+
+        $pdf = Pdf::loadView('reports.pdf', $data);
+        return $pdf->download('Laporan-Keuangan-'.Carbon::now()->format('Y-m-d').'.pdf');
     }
 }

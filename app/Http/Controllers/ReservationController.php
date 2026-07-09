@@ -8,6 +8,7 @@ use App\Models\Guest;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class ReservationController extends Controller
 {
@@ -77,6 +78,7 @@ class ReservationController extends Controller
             'check_out' => $request->check_out,
             'total_price' => $totalPrice,
             'status' => $request->status,
+            'checkin_token' => Str::random(32),
         ]);
 
         return redirect()->route('reservations.index')->with('success', 'Reservasi berhasil dibuat!');

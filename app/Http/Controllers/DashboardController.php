@@ -32,7 +32,7 @@ class DashboardController extends Controller
         // Revenue this month (payments recorded in current month)
         $revenueThisMonth = Payment::whereYear('payment_date', Carbon::now()->year)
             ->whereMonth('payment_date', Carbon::now()->month)
-            ->where('payment_status', 'paid')
+            ->whereIn('payment_status', ['paid', 'down_payment'])
             ->sum('amount');
 
         // 2. Lists for Dashboard

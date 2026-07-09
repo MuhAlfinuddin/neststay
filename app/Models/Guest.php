@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use App\Models\Scopes\TenantScope;
 
-#[Fillable(['homestay_id', 'name', 'email', 'phone', 'identity_number'])]
+#[Fillable(['homestay_id', 'name', 'email', 'phone', 'identity_number', 'ktp_photo_path'])]
 class Guest extends Model
 {
     protected static function booted(): void

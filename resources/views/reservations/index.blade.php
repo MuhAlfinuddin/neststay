@@ -111,13 +111,20 @@
                                         <span class="text-xs text-slate-400 font-medium">Selesai</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2 text-xs font-bold">
-                                    <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
-                                    <form action="{{ route('reservations.destroy', $res->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data reservasi ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
-                                    </form>
+                                <td class="px-6 py-4 text-right space-y-2 text-xs font-bold">
+                                    <div class="flex flex-col gap-2">
+                                        @if($res->checkin_token)
+                                            <a href="{{ route('checkin.show', $res->checkin_token) }}" target="_blank" class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-bold text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition">Link Check-in</a>
+                                        @endif
+                                        <div class="flex gap-2 justify-end">
+                                            <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                                            <form action="{{ route('reservations.destroy', $res->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data reservasi ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

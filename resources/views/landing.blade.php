@@ -325,7 +325,6 @@
   <section class="page cover" id="p0">
     <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
         <span style="font-size:1.5rem; font-weight:800; color:#F6EFDC;">StayNest</span>
-        <a href="{{ route('login') }}" style="color:#F6EFDC; font-size:14px; font-weight:600; padding:8px 16px; border:1px solid rgba(246,239,220,0.3); border-radius:8px;">Masuk</a>
     </header>
 
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
@@ -438,8 +437,8 @@
           <ul>
             <li>Kamar tidak terbatas</li>
             <li>Akun staf tanpa batas</li>
-            <li>Laporan keuangan lengkap</li>
-            <li>Multi-properti</li>
+            <li>Laporan keuangan & PDF Export</li>
+            <li>Check-in Digital Tamu</li>
           </ul>
           <a href="{{ route('register', ['plan' => 'lengkap']) }}" class="btn btn-leaf">Pilih Lengkap</a>
         </div>
@@ -452,6 +451,7 @@
   <section class="page closing-page" id="p4">
     <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
         <span style="font-size:1.5rem; font-weight:800; color:#F6EFDC;">StayNest</span>
+        <a href="{{ route('login') }}" style="color:#F6EFDC; font-size:14px; font-weight:600; padding:8px 16px; border:1px solid rgba(246,239,220,0.3); border-radius:8px;">Masuk</a>
     </header>
     <!-- <div class="stamp-seal">💌</div> -->
     <span class="eyebrow" style="background:rgba(227,168,87,0.2); color:#E3A857;">HOMESTAY</span>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use App\Models\Scopes\TenantScope;
 
-#[Fillable(['homestay_id', 'room_id', 'guest_id', 'check_in', 'check_out', 'total_price', 'status'])]
+#[Fillable(['homestay_id', 'room_id', 'guest_id', 'check_in', 'check_out', 'total_price', 'status', 'checkin_token'])]
 class Reservation extends Model
 {
     protected static function booted(): void

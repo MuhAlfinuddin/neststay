@@ -11,10 +11,15 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SuperAdminController;
 
+use App\Http\Controllers\GuestCheckInController;
+
 // 1. Guest Public Routes
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
+
+Route::get('/check-in/{token}', [GuestCheckInController::class, 'show'])->name('checkin.show');
+Route::post('/check-in/{token}', [GuestCheckInController::class, 'store'])->name('checkin.store');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -46,6 +51,7 @@ Route::middleware(['auth', 'role:owner,staff'])->group(function () {
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/pdf', [ReportController::class, 'exportPdf'])->name('reports.pdf');
 });
 
 // 3. Scoped Authenticated Routes (Owner Only)
