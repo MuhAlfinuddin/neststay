@@ -33,7 +33,7 @@
             <div class="space-y-4">
                 <div>
                     <label for="name" class="block text-sm font-semibold text-slate-700">Nama Lengkap Tamu</label>
-                    <input id="name" name="name" type="text" required placeholder="Contoh: Budi Santoso" value="{{ old('name') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="name" name="name" type="text" required placeholder="Contoh: Muhammad Alfinuddin" value="{{ old('name') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -50,7 +50,7 @@
 
                 <div>
                     <label for="email" class="block text-sm font-semibold text-slate-700">Alamat Email (Opsional)</label>
-                    <input id="email" name="email" type="email" placeholder="Contoh: budi@gmail.com" value="{{ old('email') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="email" name="email" type="email" placeholder="Contoh: pinnn@gmail.com" value="{{ old('email') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
                 </div>
             </div>
 

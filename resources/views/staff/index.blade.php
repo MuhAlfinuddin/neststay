@@ -16,14 +16,14 @@
     </div>
 
     <!-- Staff Table -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($staffs->isEmpty())
             <div class="text-center py-16 text-slate-400">
                 <p class="text-lg">Belum ada staff terdaftar.</p>
                 <p class="text-xs mt-1">Gunakan tombol di atas untuk mendaftarkan akun staff pertama Anda.</p>
             </div>
         @else
-            <div class="overflow-x-auto">
+            <div class="w-full block overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -51,7 +51,7 @@
                                     <form action="{{ route('staff.destroy', $staff->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun staff ini? Staff tersebut tidak akan dapat masuk kembali ke sistem.');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900 transition text-xs font-bold">Hapus Akun</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus Akun</button>
                                     </form>
                                 </td>
                             </tr>

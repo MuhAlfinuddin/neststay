@@ -17,7 +17,7 @@
 
     <!-- Filters & Search -->
     <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-        <form action="{{ route('guests.index') }}" method="GET" class="flex gap-4 items-end">
+        <form action="{{ route('guests.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 sm:items-end">
             <div class="flex-grow">
                 <label for="search" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Cari Tamu</label>
                 <input id="search" name="search" type="text" placeholder="Cari nama, email, telepon, atau nomor identitas (KTP)..." value="{{ request('search') }}" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
@@ -35,14 +35,14 @@
     </div>
 
     <!-- Guests Table -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($guests->isEmpty())
             <div class="text-center py-16 text-slate-400">
                 <p class="text-lg">Tamu tidak ditemukan.</p>
                 <p class="text-xs mt-1">Coba sesuaikan pencarian Anda atau daftarkan tamu baru.</p>
             </div>
         @else
-            <div class="overflow-x-auto">
+            <div class="w-full block overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -69,11 +69,11 @@
                                     {{ $guest->email ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-2 text-xs font-bold">
-                                    <a href="{{ route('guests.edit', $guest->id) }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-900 transition">Edit</a>
+                                    <a href="{{ route('guests.edit', $guest->id) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
                                     <form action="{{ route('guests.destroy', $guest->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data tamu ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900 transition">Hapus</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

@@ -47,14 +47,14 @@
     </div>
 
     <!-- Reservations Table -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($reservations->isEmpty())
             <div class="text-center py-16 text-slate-400">
                 <p class="text-lg">Reservasi tidak ditemukan.</p>
                 <p class="text-xs mt-1">Coba sesuaikan pencarian Anda atau buat reservasi baru.</p>
             </div>
         @else
-            <div class="overflow-x-auto">
+            <div class="w-full block overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -112,11 +112,11 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-2 text-xs font-bold">
-                                    <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-900 transition">Edit</a>
+                                    <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
                                     <form action="{{ route('reservations.destroy', $res->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data reservasi ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900 transition">Hapus</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

@@ -17,7 +17,7 @@
 
     <!-- Filters & Search -->
     <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-        <form action="{{ route('payments.index') }}" method="GET" class="flex gap-4 items-end">
+        <form action="{{ route('payments.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 sm:items-end">
             <div class="w-full sm:w-48">
                 <label for="method" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Metode Bayar</label>
                 <select id="method" name="method" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
@@ -40,14 +40,14 @@
     </div>
 
     <!-- Payments Table -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($payments->isEmpty())
             <div class="text-center py-16 text-slate-400">
                 <p class="text-lg">Transaksi belum tercatat.</p>
                 <p class="text-xs mt-1">Gunakan tombol di atas untuk mencatat pembayaran pertama.</p>
             </div>
         @else
-            <div class="overflow-x-auto">
+            <div class="w-full block overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -96,7 +96,7 @@
                                     <form action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus catatan transaksi ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900 transition">Hapus</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

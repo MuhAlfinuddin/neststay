@@ -17,7 +17,7 @@
 
     <!-- Filters & Search -->
     <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-        <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 items-end">
+        <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 items-center">
             <div class="flex-grow">
                 <label for="search" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Cari Kamar</label>
                 <input id="search" name="search" type="text" placeholder="Cari nomor atau tipe kamar..." value="{{ request('search') }}" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
@@ -45,52 +45,53 @@
     </div>
 
     <!-- Rooms Table -->
-    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($rooms->isEmpty())
             <div class="text-center py-16 text-slate-400">
                 <p class="text-lg">Kamar tidak ditemukan.</p>
                 <p class="text-xs mt-1">Coba sesuaikan pencarian Anda atau tambahkan kamar baru.</p>
             </div>
         @else
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-slate-100 text-sm">
+            <!-- Bungkus tabel dengan div yang memiliki scrollbar horizontal khusus mobile -->
+            <div class="w-full block overflow-x-auto">
+                <table class="w-full divide-y divide-slate-100 text-xs sm:text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
-                            <th class="px-6 py-4">Nomor Kamar</th>
-                            <th class="px-6 py-4">Tipe Kamar</th>
-                            <th class="px-6 py-4">Harga per Malam</th>
-                            <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4">Deskripsi</th>
-                            <th class="px-6 py-4 text-right">Aksi</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Nomor</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Tipe</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Harga</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Status</th>
+                            <th class="px-4 py-3 whitespace-nowrap hidden md:table-cell">Deskripsi</th>
+                            <th class="px-4 py-3 whitespace-nowrap text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 font-medium text-slate-700">
                         @foreach ($rooms as $room)
                             <tr>
-                                <td class="px-6 py-4 font-bold text-slate-900">
+                                <td class="px-4 py-3 font-bold text-slate-900 whitespace-nowrap">
                                     No. {{ $room->room_number }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-4 py-3 whitespace-nowrap">
                                     {{ $room->room_type }}
                                 </td>
-                                <td class="px-6 py-4 text-slate-900 font-bold">
-                                    Rp {{ number_format($room->price_per_night, 0, ',', '.') }}
+                                <td class="px-4 py-3 text-slate-900 font-bold whitespace-nowrap">
+                                    {{ number_format($room->price_per_night / 1000, 0, ',', '.') }}k
                                 </td>
-                                <td class="px-6 py-4">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
+                                <td class="px-4 py-3 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold
                                         @if ($room->status === 'available') bg-emerald-50 text-emerald-700 @elseif ($room->status === 'occupied') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
                                         {{ ucfirst($room->status) }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-xs text-slate-400 max-w-xs truncate">
+                                <td class="px-4 py-3 text-xs text-slate-400 max-w-xs truncate hidden md:table-cell">
                                     {{ $room->description ?? '-' }}
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2 text-xs font-bold">
-                                    <a href="{{ route('rooms.edit', $room->id) }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-900 transition">Edit</a>
+                                <td class="px-4 py-3 text-right space-x-1 text-[10px] sm:text-xs font-bold whitespace-nowrap">
+                                    <a href="{{ route('rooms.edit', $room->id) }}" class="inline-flex items-center px-2 py-1 text-[10px] sm:text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
                                     <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900 transition">Hapus</button>
+                                        <button type="submit" class="inline-flex items-center px-2 py-1 text-[10px] sm:text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

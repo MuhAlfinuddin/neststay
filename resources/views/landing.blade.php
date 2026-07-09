@@ -63,18 +63,58 @@
     overflow-x:auto;
     overflow-y:hidden;
     scroll-snap-type:x mandatory;
-    scroll-behavior:smooth;
+    scroll-behavior:auto;
   }
   .book::-webkit-scrollbar{display:none;}
   .page{
     flex:0 0 100vw;
     height:100vh;
     scroll-snap-align:start;
-    background:var(--paper);
     display:flex; flex-direction:column; justify-content:center;
     padding:56px 8vw 90px;
     overflow-y:auto;
     position:relative;
+    /* Efek fade-in sederhana */
+    transition: opacity 0.6s ease;
+    opacity: 0;
+  }
+  .page.is-active {
+    opacity: 1;
+  }
+
+  /* Staggered Content: Konten muncul dengan jeda */
+  .page > *:not(header):not(.page-num) {
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  .page.is-active > *:not(header):not(.page-num) {
+      opacity: 1;
+      transform: translateY(0);
+  }
+
+  /* Jeda per elemen */
+  .page.is-active .eyebrow { transition-delay: 0.1s; }
+  .page.is-active h1, .page.is-active h2 { transition-delay: 0.2s; }
+  .page.is-active p, .page.is-active ul { transition-delay: 0.3s; }
+  .page.is-active .btn { transition-delay: 0.4s; }
+  .page.is-active .kunci-wrap { transition-delay: 0.2s; }
+  .page.is-active .stamps-row { transition-delay: 0.2s; }
+  .page.is-active .price-cards { transition-delay: 0.3s; }
+  /* Kembalikan background untuk halaman yang membutuhkannya */
+  .kunci-page, .stamps-page {
+    background: #D2B48C;
+  }
+  .cover {
+    background: #1A150C;
+  }
+  .price-page {
+    background: #ECDDB9;
+  }
+  .closing-page {
+    background: linear-gradient(135deg, rgba(43,32,19,0.85), rgba(20,14,8,0.95)), url('/img/GambarOm.png');
+    background-size: cover;
+    background-position: center;
   }
   .page-num{
     position:absolute; bottom:22px; left:8vw;
@@ -156,14 +196,6 @@
       radial-gradient(circle at 90% 92%, rgba(181,83,60,0.13) 0%, transparent 45%),
       radial-gradient(circle at 8% 90%, rgba(107,66,38,0.10) 0%, transparent 40%);
   }
-  .price-page::before{
-    content:"";
-    position:absolute; inset:0;
-    background-image: url('https://www.transparenttextures.com/patterns/rice-paper-3.png');
-    opacity:0.35;
-    mix-blend-mode:multiply;
-    pointer-events:none;
-  }
   .price-page::after{
     content:"";
     position:absolute; top:-120px; left:50%; transform:translateX(-50%);
@@ -224,12 +256,6 @@
     background-size:cover;
     background-position:center;
   }
-  .closing-page::after{
-    content:""; position:absolute; inset:0;
-    opacity:0.05;
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-    pointer-events:none;
-  }
   .closing-page > *{position:relative; z-index:1;}
   .closing-page h2{
     font-family:'Zilla Slab', serif; font-style:italic; font-weight:600;
@@ -246,6 +272,11 @@
     .closing-page{background-attachment:scroll;}
   }
 
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  .floating { animation: float 6s ease-in-out infinite; }
   /* ============ Book chrome: index tabs + arrows ============ */
   .tabs-index{
     position:fixed; right:0; top:50%; transform:translateY(-50%);
@@ -280,6 +311,9 @@
     .tabs-index{display:none;}
     .kunci-wrap{flex-direction:column;}
     .stamps-row{gap:22px;}
+    .price-cards { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 20px; }
+    .price-page { padding-bottom: 120px !important; height: auto !important; }
+    .price-card { width: 100%; min-width: 100% !important; margin-bottom: 20px; flex-shrink: 0; }
   }
 </style>
 </head>
@@ -294,15 +328,29 @@
         <a href="{{ route('login') }}" style="color:#F6EFDC; font-size:14px; font-weight:600; padding:8px 16px; border:1px solid rgba(246,239,220,0.3); border-radius:8px;">Masuk</a>
     </header>
 
-    <span class="eyebrow" style="background:rgba(227,168,87,0.2); color:#E3A857;">SELAMAT DATANG</span>
-    <h1>StayNest</h1>
-    <p>Teman kelola homestay keluarga — kamar, tamu, dan uang masuk, serapi papan kunci di meja resepsionis.</p>
-    <button class="btn btn-leaf" onclick="goTo(1)">Buka Halaman Pertama →</button>
-    <p class="hint">Geser ke samping, atau pakai tab di kanan layar</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
+        <span class="eyebrow" style="background:rgba(227,168,87,0.2); color:#E3A857; margin-bottom: 24px; display: block; width: fit-content;">SELAMAT DATANG</span>
+
+        <div class="floating" style="margin-bottom: 24px; width: 100px; height: 100px; color: var(--marigold); opacity: 0.6;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+        </div>
+
+        <h1 style="font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 16px;">StayNest</h1>
+        <p style="font-size: clamp(1rem, 2vw, 1.25rem); max-width: 500px; line-height: 1.4; color:rgba(246,239,220,0.85); margin-bottom: 32px;">Teman kelola homestay keluarga — kamar, tamu, dan uang masuk, serapi papan kunci di meja resepsionis.</p>
+
+        <button class="btn btn-leaf" onclick="goTo(1)" style="font-size: 1.1rem; padding: 16px 32px;">Buka Halaman Pertama →</button>
+        <p class="hint" style="margin-top: 24px;">Geser ke samping, atau pakai tab di kanan layar</p>
+    </div>
   </section>
 
   <!-- PAGE 1 — Papan Kunci -->
   <section class="page kunci-page" id="p1">
+    <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
+        <span style="font-size:1.5rem; font-weight:800; color:var(--ink);">StayNest</span>
+    </header>
     <div class="kunci-wrap">
       <div class="pegboard">
         <div class="pegboard-head">
@@ -335,6 +383,9 @@
 
   <!-- PAGE 2 — Fitur -->
   <section class="page stamps-page" id="p2">
+    <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
+        <span style="font-size:1.5rem; font-weight:800; color:var(--ink);">StayNest</span>
+    </header>
     <div class="stamps-head">
       <span class="eyebrow">Cap Fitur</span>
       <h2>Tiga hal yang paling sering bikin repot, sudah dirapikan</h2>
@@ -362,6 +413,9 @@
 
   <!-- PAGE 3 — Harga -->
   <section class="page price-page" id="p3">
+    <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
+        <span style="font-size:1.5rem; font-weight:800; color:var(--ink);">StayNest</span>
+    </header>
     <div class="price-container">
       <h2 class="bubble-title">Pilih Paket Sesuai Kebutuhan Homestay Anda</h2>
       <p class="price-sub">Semua paket sudah termasuk manajemen kamar, buku tamu digital, dan laporan bulanan untuk pengelolaan yang lebih efisien.</p>
@@ -396,6 +450,9 @@
 
   <!-- PAGE 4 — Closing -->
   <section class="page closing-page" id="p4">
+    <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
+        <span style="font-size:1.5rem; font-weight:800; color:#F6EFDC;">StayNest</span>
+    </header>
     <!-- <div class="stamp-seal">💌</div> -->
     <span class="eyebrow" style="background:rgba(227,168,87,0.2); color:#E3A857;">HOMESTAY</span>
     <h2>Kamar yang Anda tandai malam ini bisa jadi yang terakhir kali dicatat di kertas.</h2>
@@ -443,10 +500,14 @@
     current = i;
     tabs.forEach((t, idx) => t.classList.toggle('active', idx === i));
     dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    pages.forEach((p, idx) => p.classList.toggle('is-active', idx === i));
   }
   tabs.forEach(t => t.addEventListener('click', () => goTo(parseInt(t.dataset.i))));
   document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
   document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+
+  // Initialize active class on load
+  setActive(0);
 
   let scrollTimeout;
   book.addEventListener('scroll', () => {
