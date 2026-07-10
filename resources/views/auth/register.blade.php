@@ -14,7 +14,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto w-full max-w-lg">
-        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl sm:rounded-2xl bg-ink border border-paper-deep text-panel">
+        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl rounded-2xl bg-ink border border-paper-deep text-panel">
             @if ($errors->any())
                 <div class="mb-6 rounded-lg p-4 bg-red-900 border border-red-800 text-red-100">
                     <ul class="list-disc list-inside text-xs space-y-1">

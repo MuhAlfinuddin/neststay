@@ -14,7 +14,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto w-full max-w-md">
-        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl sm:rounded-2xl bg-ink border border-paper-deep text-panel">
+        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl rounded-2xl bg-ink border border-paper-deep text-panel">
             <form class="space-y-6" action="{{ route('login') }}" method="POST">
                 @csrf
                 <div>
