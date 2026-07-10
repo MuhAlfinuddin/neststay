@@ -524,7 +524,10 @@
   document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
 
   // Initialize active class on load
-  setActive(0);
+  const initHash = window.location.hash;
+  if (initHash === '#features') goTo(2);
+  else if (initHash === '#pricing') goTo(3);
+  else setActive(0);
 
   let scrollTimeout;
   book.addEventListener('scroll', () => {
