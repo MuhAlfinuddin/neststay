@@ -44,7 +44,7 @@
 
                 <!-- Desktop Links -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="{{ route('landing') }}#features" class="text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] transition">Fitur</a>
+                    <a href="{{ route('landing') }}" class="text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] transition">Beranda</a>
                     <a href="{{ route('landing') }}#pricing" class="text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] transition">Harga</a>
                     @auth
                         <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center px-4 h-9 text-sm font-bold border border-transparent bg-[#C6863A] text-[#FBF6E9] rounded-lg transition hover:bg-[#E3A857] shadow-sm">Dashboard</a>
@@ -71,7 +71,7 @@
         <!-- Mobile Menu (Animated slide-down) -->
         <div id="mobileMenu" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 bg-[#FFFBF1] border-t border-[#EEE1C3] rounded-b-2xl">
             <div class="px-4 py-3 space-y-1">
-                <a href="{{ route('landing') }}#features" class="block py-3 min-h-[44px] text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] flex items-center">Fitur</a>
+                <a href="{{ route('landing') }}" class="block py-3 min-h-[44px] text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] flex items-center">Beranda</a>
                 <a href="{{ route('landing') }}#pricing" class="block py-3 min-h-[44px] text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] flex items-center">Harga</a>
                 @guest
                     <hr class="border-[#EEE1C3] my-1">
