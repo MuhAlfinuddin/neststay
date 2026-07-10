@@ -3,15 +3,15 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8" style="background-color: var(--paper);">
+<div class="min-h-[80vh] flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-8" style="background-color: var(--paper);">
     <div class="sm:mx-auto w-full max-w-md">
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight" style="color: var(--ink);">
+        <h2 class="mt-6 text-center text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--ink);">
             Masuk ke Akun StayNest
         </h2>
     </div>
 
     <div class="mt-8 sm:mx-auto w-full max-w-md">
-        <div class="py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10" style="background-color: var(--panel); border: 1px solid var(--paper-deep);">
+        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl sm:rounded-2xl" style="background-color: var(--panel); border: 1px solid var(--paper-deep);">
             <form class="space-y-6" action="{{ route('login') }}" method="POST">
                 @csrf
                 <div>

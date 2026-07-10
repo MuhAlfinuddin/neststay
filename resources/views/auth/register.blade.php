@@ -3,9 +3,9 @@
 @extends('layouts.guest')
 
 @section('content')
-<div class="min-h-[90vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8" style="background-color: var(--paper);">
+<div class="min-h-[90vh] flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-8" style="background-color: var(--paper);">
     <div class="sm:mx-auto w-full max-w-lg">
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight" style="color: var(--ink);">
+        <h2 class="mt-6 text-center text-2xl sm:text-3xl font-bold tracking-tight" style="color: var(--ink);">
             Daftarkan Homestay Anda di StayNest
         </h2>
         <p class="mt-2 text-center text-sm" style="color: var(--ink-soft);">
@@ -17,7 +17,7 @@
     </div>
 
     <div class="mt-8 sm:mx-auto w-full max-w-lg">
-        <div class="py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10" style="background-color: var(--panel); border: 1px solid var(--paper-deep);">
+        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl sm:rounded-2xl" style="background-color: var(--panel); border: 1px solid var(--paper-deep);">
             @if ($errors->any())
                 <div class="mb-6 rounded-lg p-4" style="background-color: #FEF2F2; border: 1px solid #FEE2E2; color: #991B1B;">
                     <div class="flex">
