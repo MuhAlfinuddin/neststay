@@ -17,27 +17,29 @@
 
     <!-- Filters & Search -->
     <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-        <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 items-center">
-            <div class="flex-grow">
-                <label for="search" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Cari Kamar</label>
-                <input id="search" name="search" type="text" placeholder="Cari nomor atau tipe kamar..." value="{{ request('search') }}" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
-            </div>
-            
-            <div class="w-full sm:w-48">
-                <label for="status" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Status</label>
-                <select id="status" name="status" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
-                    <option value="">Semua Status</option>
-                    <option value="available" {{ request('status') === 'available' ? 'selected' : '' }}>Tersedia (Available)</option>
-                    <option value="occupied" {{ request('status') === 'occupied' ? 'selected' : '' }}>Terisi (Occupied)</option>
-                    <option value="maintenance" {{ request('status') === 'maintenance' ? 'selected' : '' }}>Perbaikan (Maintenance)</option>
-                </select>
+        <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col gap-4">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-grow">
+                    <label for="search" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Cari Kamar</label>
+                    <input id="search" name="search" type="text" placeholder="Cari nomor atau tipe kamar..." value="{{ request('search') }}" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
+                </div>
+
+                <div class="w-full sm:w-48">
+                    <label for="status" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Status</label>
+                    <select id="status" name="status" class="appearance-none block w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-xs">
+                        <option value="">Semua Status</option>
+                        <option value="available" {{ request('status') === 'available' ? 'selected' : '' }}>Tersedia (Available)</option>
+                        <option value="occupied" {{ request('status') === 'occupied' ? 'selected' : '' }}>Terisi (Occupied)</option>
+                        <option value="maintenance" {{ request('status') === 'maintenance' ? 'selected' : '' }}>Perbaikan (Maintenance)</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="flex space-x-2 w-full sm:w-auto">
-                <button type="submit" class="w-full sm:w-auto px-4 py-2 text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition">
+            <div class="flex space-x-2 justify-start w-full">
+                <button type="submit" class="px-6 py-2 text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition">
                     Filter
                 </button>
-                <a href="{{ route('rooms.index') }}" class="w-full sm:w-auto px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl text-center transition">
+                <a href="{{ route('rooms.index') }}" class="px-6 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
                     Reset
                 </a>
             </div>
