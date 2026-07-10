@@ -134,43 +134,40 @@
             </div>
 
             <!-- Recent Reservations Table -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-bold text-slate-900">Reservasi Terbaru</h3>
-                    <a href="{{ route('reservations.index') }}" class="text-sm font-bold text-[var(--color-teak-deep)] hover:underline">Lihat Semua</a>
+            <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-100 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900">Reservasi Terbaru</h3>
+                    <a href="{{ route('reservations.index') }}" class="text-xs sm:text-sm font-bold text-[var(--color-teak-deep)] hover:underline">Lihat Semua</a>
                 </div>
 
                 @if ($recentReservations->isEmpty())
                     <p class="text-slate-400 text-center py-6 text-sm">Belum ada reservasi masuk.</p>
                 @else
                     <div class="overflow-x-auto rounded-lg border border-slate-100">
-                        <table class="min-w-full divide-y divide-slate-100 text-sm">
-                            <thead>
-                                <tr class="text-left font-semibold text-slate-400">
-                                    <th class="py-3">Tamu</th>
-                                    <th class="py-3">Kamar</th>
-                                    <th class="py-3">Check In</th>
-                                    <th class="py-3">Check Out</th>
-                                    <th class="py-3">Status</th>
+                        <table class="w-full text-[10px] sm:text-sm">
+                            <thead class="bg-slate-50 text-slate-500">
+                                <tr class="text-left font-semibold">
+                                    <th class="p-2 sm:p-3">Tamu</th>
+                                    <th class="p-2 sm:p-3">Kamar</th>
+                                    <th class="p-2 sm:p-3 whitespace-nowrap">Check In</th>
+                                    <th class="p-2 sm:p-3">Status</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 font-medium">
                                 @foreach ($recentReservations as $res)
                                     <tr>
-                                        <td class="py-3">
+                                        <td class="p-2 sm:p-3">
                                             <p class="font-bold text-slate-800">{{ $res->guest->name }}</p>
-                                            <p class="text-xs text-slate-400">{{ $res->guest->phone }}</p>
                                         </td>
-                                        <td class="py-3">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">
-                                                Kamar {{ $res->room->room_number }}
+                                        <td class="p-2 sm:p-3">
+                                            <span class="inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">
+                                                No.{{ $res->room->room_number }}
                                             </span>
                                         </td>
-                                        <td class="py-3 text-slate-600">{{ $res->check_in->format('d M Y') }}</td>
-                                        <td class="py-3 text-slate-600">{{ $res->check_out->format('d M Y') }}</td>
-                                        <td class="py-3">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
-                                                @if ($res->status === 'checked_in') bg-blue-50 text-blue-700 @elseif ($res->status === 'checked_out') bg-slate-100 text-slate-600 @elseif ($res->status === 'confirmed') bg-emerald-50 text-emerald-700 @elseif ($res->status === 'cancelled') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
+                                        <td class="p-2 sm:p-3 whitespace-nowrap text-slate-600">{{ $res->check_in->format('d/m/y') }}</td>
+                                        <td class="p-2 sm:p-3">
+                                            <span class="inline-block px-1.5 py-0.5 rounded-full text-[10px] font-semibold
+                                                @if ($res->status === 'checked_in') bg-blue-50 text-blue-700 @elseif ($res->status === 'confirmed') bg-emerald-50 text-emerald-700 @else bg-amber-50 text-amber-700 @endif">
                                                 {{ ucfirst(str_replace('_', ' ', $res->status)) }}
                                             </span>
                                         </td>
