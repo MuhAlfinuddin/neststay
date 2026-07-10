@@ -50,7 +50,7 @@ class PaymentController extends Controller
                     }
                 },
             ],
-            'payment_method' => ['required', 'string', 'in:cash,transfer,card'],
+            'payment_method' => ['required', 'string', 'in:cash,transfer,card,qris'],
             'payment_status' => ['required', 'string', 'in:paid,down_payment,unpaid'],
             'payment_date' => ['required', 'date'],
         ]);

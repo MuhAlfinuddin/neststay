@@ -10,9 +10,9 @@
             <h1 class="text-2xl font-black text-slate-900">Daftar Transaksi Pembayaran</h1>
             <p class="text-xs text-slate-500 mt-1">Pantau dan verifikasi pembayaran tamu homestay Anda.</p>
         </div>
-        <a href="{{ route('payments.create') }}" class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
+        <button type="button" onclick="openPaymentModal()" class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
             + Catat Pembayaran Baru
-        </a>
+        </button>
     </div>
 
     <!-- Filters & Search -->
@@ -25,6 +25,7 @@
                     <option value="cash" {{ request('method') === 'cash' ? 'selected' : '' }}>Tunai (Cash)</option>
                     <option value="transfer" {{ request('method') === 'transfer' ? 'selected' : '' }}>Transfer Bank</option>
                     <option value="card" {{ request('method') === 'card' ? 'selected' : '' }}>Kartu Kredit/Debit</option>
+                    <option value="qris" {{ request('method') === 'qris' ? 'selected' : '' }}>QRIS (Demo)</option>
                 </select>
             </div>
 
@@ -138,4 +139,82 @@
         @endif
     </div>
 </div>
+
+<!-- Modal Pilih Metode Pembayaran -->
+<div id="paymentModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closePaymentModal()"></div>
+    <div class="flex items-center justify-center min-h-full p-4">
+        <div class="relative bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-100 p-6 sm:p-8">
+            <button onclick="closePaymentModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 transition" aria-label="Tutup">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h2 class="text-xl font-black text-slate-900">Pilih Metode Pembayaran</h2>
+                <p class="text-sm text-slate-500 mt-1">Pilih metode yang sesuai untuk mencatat transaksi</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Tunai -->
+                <a href="{{ route('payments.create', ['method' => 'cash']) }}"
+                   class="flex flex-col items-center gap-3 p-5 rounded-xl border-2 border-transparent bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-300 transition group">
+                    <span class="text-4xl">💵</span>
+                    <div class="text-center">
+                        <p class="font-bold text-slate-900">Tunai</p>
+                        <p class="text-xs text-slate-500">Cash</p>
+                    </div>
+                </a>
+
+                <!-- Transfer -->
+                <a href="{{ route('payments.create', ['method' => 'transfer']) }}"
+                   class="flex flex-col items-center gap-3 p-5 rounded-xl border-2 border-transparent bg-blue-50 hover:bg-blue-100 hover:border-blue-300 transition group">
+                    <span class="text-4xl">🏦</span>
+                    <div class="text-center">
+                        <p class="font-bold text-slate-900">Transfer</p>
+                        <p class="text-xs text-slate-500">Bank</p>
+                    </div>
+                </a>
+
+                <!-- Kartu -->
+                <a href="{{ route('payments.create', ['method' => 'card']) }}"
+                   class="flex flex-col items-center gap-3 p-5 rounded-xl border-2 border-transparent bg-purple-50 hover:bg-purple-100 hover:border-purple-300 transition group">
+                    <span class="text-4xl">💳</span>
+                    <div class="text-center">
+                        <p class="font-bold text-slate-900">Kartu</p>
+                        <p class="text-xs text-slate-500">Kredit/Debit</p>
+                    </div>
+                </a>
+
+                <!-- QRIS -->
+                <a href="{{ route('payments.create', ['method' => 'qris']) }}"
+                   class="flex flex-col items-center gap-3 p-5 rounded-xl border-2 border-transparent bg-gradient-to-br from-cyan-50 to-green-50 hover:from-cyan-100 hover:to-green-100 hover:border-emerald-400 transition group relative overflow-hidden">
+                    <span class="text-4xl relative z-10">📱</span>
+                    <div class="text-center relative z-10">
+                        <p class="font-bold text-slate-900">QRIS</p>
+                        <p class="text-xs text-slate-500">Demo</p>
+                    </div>
+                    <span class="absolute top-2 right-2 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded z-10">DEMO</span>
+                </a>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button onclick="closePaymentModal()" class="text-sm font-semibold text-slate-400 hover:text-slate-600 transition">Batal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPaymentModal() {
+        document.getElementById('paymentModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+    function closePaymentModal() {
+        document.getElementById('paymentModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePaymentModal();
+    });
+</script>
 @endsection
