@@ -13,7 +13,7 @@
 
         <!-- Year filter -->
         <div class="flex items-center space-x-2">
-            <a href="{{ route('reports.pdf') }}" class="px-4 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition">
+            <a href="{{ route('reports.pdf', ['year' => $year]) }}" class="px-4 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition">
                 Export PDF
             </a>
             <form action="{{ route('reports.index') }}" method="GET" class="flex items-center space-x-2">

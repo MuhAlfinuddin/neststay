@@ -46,18 +46,21 @@ class ReportController extends Controller
     /**
      * Export monthly revenue to PDF.
      */
-    public function exportPdf()
+    public function exportPdf(Request $request)
     {
         $user = auth()->user();
         $homestay = $user->homestay;
+        $year = $request->input('year', date('Y'));
 
         // Plan limitation check
         if ($homestay->plan !== 'lengkap' || $homestay->subscription_status !== 'active') {
             return redirect()->route('dashboard')->with('error', 'Fitur Export PDF hanya tersedia untuk Paket Lengkap.');
         }
 
+        // Gunakan filter tahun dan status yang sama dengan Dashboard
         $payments = Payment::with(['reservation.guest', 'reservation.room'])
-            ->where('payment_status', 'paid')
+            ->whereYear('payment_date', $year)
+            ->whereIn('payment_status', ['paid', 'down_payment'])
             ->orderBy('payment_date', 'desc')
             ->get();
 
@@ -68,6 +71,6 @@ class ReportController extends Controller
         ];
 
         $pdf = Pdf::loadView('reports.pdf', $data);
-        return $pdf->download('Laporan-Keuangan-'.Carbon::now()->format('Y-m-d').'.pdf');
+        return $pdf->download('Laporan-Keuangan-'.$year.'.pdf');
     }
 }
