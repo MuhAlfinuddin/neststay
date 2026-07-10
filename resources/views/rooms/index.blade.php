@@ -95,30 +95,60 @@
             </div>
 
             <!-- Mobile Card List -->
-            <div class="block md:hidden divide-y divide-slate-50">
+            <div class="block md:hidden space-y-4 p-4">
                 @foreach ($rooms as $room)
-                    <div class="p-4 flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-lg
-                            @if ($room->status === 'available') bg-emerald-100 @elseif ($room->status === 'occupied') bg-red-100 @else bg-amber-100 @endif">
-                            @if ($room->status === 'available') 🔑 @elseif ($room->status === 'occupied') 🛌 @else 🔧 @endif
-                        </div>
-                        <div class="flex-grow min-w-0">
-                            <div class="flex items-center gap-2">
-                                <h4 class="font-bold text-slate-900">No. {{ $room->room_number }}</h4>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold
-                                    @if ($room->status === 'available') bg-emerald-50 text-emerald-700 @elseif ($room->status === 'occupied') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
-                                    {{ ucfirst($room->status) }}
+                    @php
+                        $statusColors = [
+                            'available' => ['border' => 'border-emerald-300', 'bg' => 'bg-emerald-50', 'badge' => 'bg-emerald-100 text-emerald-700', 'icon' => '🔑', 'label' => 'Tersedia'],
+                            'occupied' => ['border' => 'border-red-300', 'bg' => 'bg-red-50', 'badge' => 'bg-red-100 text-red-700', 'icon' => '🛌', 'label' => 'Terisi'],
+                            'maintenance' => ['border' => 'border-amber-300', 'bg' => 'bg-amber-50', 'badge' => 'bg-amber-100 text-amber-700', 'icon' => '🔧', 'label' => 'Perbaikan'],
+                        ];
+                        $c = $statusColors[$room->status] ?? $statusColors['available'];
+                    @endphp
+                    <div class="rounded-2xl border-2 {{ $c['border'] }} {{ $c['bg'] }} shadow-sm overflow-hidden">
+                        <div class="p-4 space-y-3">
+                            <!-- Header: Status + Tipe -->
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold {{ $c['badge'] }}">
+                                    {{ $c['icon'] }} {{ $c['label'] }}
                                 </span>
+                                <span class="text-xs font-semibold text-slate-500">{{ $room->room_type }}</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-0.5">{{ $room->room_type }} · Rp {{ number_format($room->price_per_night, 0, ',', '.') }}/malam</p>
-                        </div>
-                        <div class="flex gap-2 shrink-0">
-                            <a href="{{ route('rooms.edit', $room->id) }}" class="inline-flex items-center justify-center px-3 min-h-[36px] text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
-                            <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="inline-flex items-center justify-center px-3 min-h-[36px] text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
-                            </form>
+
+                            <!-- Room Number -->
+                            <div class="text-center">
+                                <p class="text-xs text-slate-400 font-medium">Nomor Kamar</p>
+                                <h3 class="text-3xl font-black text-slate-900 tracking-tight">{{ $room->room_number }}</h3>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="text-center">
+                                <p class="text-lg font-bold text-[var(--color-teak-deep)]">
+                                    Rp {{ number_format($room->price_per_night, 0, ',', '.') }}
+                                    <span class="text-sm font-medium text-slate-400">/malam</span>
+                                </p>
+                            </div>
+
+                            <!-- Description -->
+                            @if ($room->description)
+                                <p class="text-xs text-slate-500 text-center line-clamp-2">{{ $room->description }}</p>
+                            @endif
+
+                            <!-- Actions -->
+                            <div class="flex gap-3 pt-1">
+                                <a href="{{ route('rooms.edit', $room->id) }}"
+                                   class="flex-1 flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition">
+                                    Edit
+                                </a>
+                                <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="w-full flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 rounded-xl transition">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endforeach
