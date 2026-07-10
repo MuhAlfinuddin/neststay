@@ -307,15 +307,30 @@
   @media(max-width:768px){
     body{overflow:auto;}
     .book{height:auto; overflow-x:visible; overflow-y:visible; display:block; scroll-snap-type:none;}
-    .page{height:auto; min-height:100vh; padding:60px 4vw 90px;}
+    .page{height:auto; min-height:100vh; padding:60px 16px 100px;}
     .tabs-index{display:none;}
-    .kunci-wrap{flex-direction:column; gap:30px;}
-    .pegboard { width: 100%; max-width: 340px; padding: 20px; }
-    .peg-grid { grid-template-columns: repeat(4, 1fr); gap: 10px 5px; }
-    .stamps-row{gap:22px;}
-    .price-cards { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 20px; padding: 0 10px; }
-    .price-page { padding-bottom: 120px !important; height: auto !important; padding-top: 50px; }
-    .price-card { width: 100%; min-width: auto !important; margin-bottom: 20px; flex-shrink: 0; padding: 20px; }
+    .kunci-wrap{flex-direction:column; gap:24px;}
+    .pegboard { width: 100%; max-width: 340px; padding: 16px; }
+    .peg-grid { grid-template-columns: repeat(4, 1fr); gap: 8px 4px; }
+    .stamps-row{gap:16px;}
+    .price-cards { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 16px; padding: 0 4px; }
+    .price-page { padding-bottom: 120px !important; height: auto !important; padding-top: 40px; }
+    .price-card { width: 100%; min-width: auto !important; margin-bottom: 16px; flex-shrink: 0; padding: 20px; }
+    .btn { width: 100%; text-align: center; font-size: 14px; padding: 14px 20px; }
+    .cover .btn-leaf { width: 100%; }
+    .btn-outline { width: 100%; }
+    .kunci-copy h2{font-size:1.3rem;}
+    .stamps-head h2{font-size:1.3rem;}
+    .cover h1{font-size:clamp(2rem,8vw,3rem);}
+    .pegboard-head h3{font-size:12px;}
+    .nav-arrows{bottom:12px;}
+    .nav-arrows button{width:36px;height:36px;font-size:16px;}
+    .closing-page h2{font-size:clamp(1.3rem,5vw,1.8rem);}
+    .price-card .price{font-size:28px;}
+  }
+  @supports(padding-bottom:env(safe-area-inset-bottom)){
+    .page{padding-bottom:calc(90px + env(safe-area-inset-bottom));}
+    .nav-arrows{bottom:calc(12px + env(safe-area-inset-bottom));}
   }
 </style>
 </head>

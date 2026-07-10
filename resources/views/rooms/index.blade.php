@@ -46,7 +46,7 @@
         </form>
     </div>
 
-    <!-- Rooms Table -->
+    <!-- Rooms Table / Card List -->
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($rooms->isEmpty())
             <div class="text-center py-16 text-slate-400">
@@ -54,8 +54,8 @@
                 <p class="text-xs mt-1">Coba sesuaikan pencarian Anda atau tambahkan kamar baru.</p>
             </div>
         @else
-            <!-- Bungkus tabel dengan div yang memiliki scrollbar horizontal khusus mobile -->
-            <div class="w-full block overflow-x-auto">
+            <!-- Desktop Table -->
+            <div class="hidden md:block w-full overflow-x-auto">
                 <table class="w-full divide-y divide-slate-100 text-xs sm:text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -63,43 +63,65 @@
                             <th class="px-4 py-3 whitespace-nowrap">Tipe</th>
                             <th class="px-4 py-3 whitespace-nowrap">Harga</th>
                             <th class="px-4 py-3 whitespace-nowrap">Status</th>
-                            <th class="px-4 py-3 whitespace-nowrap hidden md:table-cell">Deskripsi</th>
+                            <th class="px-4 py-3 whitespace-nowrap">Deskripsi</th>
                             <th class="px-4 py-3 whitespace-nowrap text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 font-medium text-slate-700">
                         @foreach ($rooms as $room)
                             <tr>
-                                <td class="px-4 py-3 font-bold text-slate-900 whitespace-nowrap">
-                                    No. {{ $room->room_number }}
-                                </td>
+                                <td class="px-4 py-3 font-bold text-slate-900 whitespace-nowrap">No. {{ $room->room_number }}</td>
+                                <td class="px-4 py-3 whitespace-nowrap">{{ $room->room_type }}</td>
+                                <td class="px-4 py-3 text-slate-900 font-bold whitespace-nowrap">{{ number_format($room->price_per_night / 1000, 0, ',', '.') }}k</td>
                                 <td class="px-4 py-3 whitespace-nowrap">
-                                    {{ $room->room_type }}
-                                </td>
-                                <td class="px-4 py-3 text-slate-900 font-bold whitespace-nowrap">
-                                    {{ number_format($room->price_per_night / 1000, 0, ',', '.') }}k
-                                </td>
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
                                         @if ($room->status === 'available') bg-emerald-50 text-emerald-700 @elseif ($room->status === 'occupied') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
                                         {{ ucfirst($room->status) }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-3 text-xs text-slate-400 max-w-xs truncate hidden md:table-cell">
-                                    {{ $room->description ?? '-' }}
-                                </td>
-                                <td class="px-4 py-3 text-right space-x-1 text-[10px] sm:text-xs font-bold whitespace-nowrap">
-                                    <a href="{{ route('rooms.edit', $room->id) }}" class="inline-flex items-center px-2 py-1 text-[10px] sm:text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                                <td class="px-4 py-3 text-xs text-slate-400 max-w-xs truncate">{{ $room->description ?? '-' }}</td>
+                                <td class="px-4 py-3 text-right space-x-1 text-xs font-bold whitespace-nowrap">
+                                    <a href="{{ route('rooms.edit', $room->id) }}" class="inline-flex items-center px-3 py-1.5 min-h-[36px] font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
                                     <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-2 py-1 text-[10px] sm:text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 min-h-[36px] font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card List -->
+            <div class="block md:hidden divide-y divide-slate-50">
+                @foreach ($rooms as $room)
+                    <div class="p-4 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-lg
+                            @if ($room->status === 'available') bg-emerald-100 @elseif ($room->status === 'occupied') bg-red-100 @else bg-amber-100 @endif">
+                            @if ($room->status === 'available') 🔑 @elseif ($room->status === 'occupied') 🛌 @else 🔧 @endif
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-slate-900">No. {{ $room->room_number }}</h4>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold
+                                    @if ($room->status === 'available') bg-emerald-50 text-emerald-700 @elseif ($room->status === 'occupied') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
+                                    {{ ucfirst($room->status) }}
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">{{ $room->room_type }} · Rp {{ number_format($room->price_per_night, 0, ',', '.') }}/malam</p>
+                        </div>
+                        <div class="flex gap-2 shrink-0">
+                            <a href="{{ route('rooms.edit', $room->id) }}" class="inline-flex items-center justify-center px-3 min-h-[36px] text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                            <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center justify-center px-3 min-h-[36px] text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
             <!-- Pagination -->

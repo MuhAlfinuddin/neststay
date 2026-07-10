@@ -33,32 +33,32 @@
             <div class="space-y-4">
                 <div>
                     <label for="name" class="block text-sm font-semibold text-slate-700">Nama Lengkap Tamu</label>
-                    <input id="name" name="name" type="text" required placeholder="Contoh: Muhammad Alfinuddin" value="{{ old('name') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="name" name="name" type="text" required placeholder="Contoh: Muhammad Alfinuddin" value="{{ old('name') }}" autocomplete="name" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label for="identity_number" class="block text-sm font-semibold text-slate-700">Nomor Identitas (NIK/KTP/Paspor)</label>
-                        <input id="identity_number" name="identity_number" type="text" required placeholder="Contoh: 327102XXXXXXXXXX" value="{{ old('identity_number') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                        <input id="identity_number" name="identity_number" type="text" required placeholder="Contoh: 327102XXXXXXXXXX" value="{{ old('identity_number') }}" inputmode="numeric" autocomplete="cc-number" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                     </div>
 
                     <div>
                         <label for="phone" class="block text-sm font-semibold text-slate-700">Nomor Telepon</label>
-                        <input id="phone" name="phone" type="text" required placeholder="Contoh: 0812XXXXXXXX" value="{{ old('phone') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                        <input id="phone" name="phone" type="tel" required placeholder="Contoh: 0812XXXXXXXX" value="{{ old('phone') }}" inputmode="tel" autocomplete="tel" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                     </div>
                 </div>
 
                 <div>
                     <label for="email" class="block text-sm font-semibold text-slate-700">Alamat Email (Opsional)</label>
-                    <input id="email" name="email" type="email" placeholder="Contoh: pinnn@gmail.com" value="{{ old('email') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="email" name="email" type="email" placeholder="Contoh: pinnn@gmail.com" value="{{ old('email') }}" inputmode="email" autocomplete="email" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
             </div>
 
-            <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100">
-                <a href="{{ route('guests.index') }}" class="px-4 py-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+                <a href="{{ route('guests.index') }}" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition w-full sm:w-auto">
                     Batal
                 </a>
-                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
+                <button type="submit" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md w-full sm:w-auto">
                     Simpan Tamu
                 </button>
             </div>

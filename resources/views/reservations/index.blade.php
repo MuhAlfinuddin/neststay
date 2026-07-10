@@ -48,7 +48,7 @@
         </form>
     </div>
 
-    <!-- Reservations Table -->
+    <!-- Reservations Table / Card List -->
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($reservations->isEmpty())
             <div class="text-center py-16 text-slate-400">
@@ -56,7 +56,8 @@
                 <p class="text-xs mt-1">Coba sesuaikan pencarian Anda atau buat reservasi baru.</p>
             </div>
         @else
-            <div class="w-full block overflow-x-auto">
+            <!-- Desktop Table -->
+            <div class="hidden md:block w-full overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -85,9 +86,7 @@
                                     <p class="text-xs text-slate-500 font-semibold">CI: {{ $res->check_in->format('d M Y') }}</p>
                                     <p class="text-xs text-slate-500 font-semibold">CO: {{ $res->check_out->format('d M Y') }}</p>
                                 </td>
-                                <td class="px-6 py-4 font-bold text-slate-900">
-                                    Rp {{ number_format($res->total_price, 0, ',', '.') }}
-                                </td>
+                                <td class="px-6 py-4 font-bold text-slate-900">Rp {{ number_format($res->total_price, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
                                         @if ($res->status === 'checked_in') bg-blue-50 text-blue-700 @elseif ($res->status === 'checked_out') bg-slate-100 text-slate-600 @elseif ($res->status === 'confirmed') bg-emerald-50 text-emerald-700 @elseif ($res->status === 'cancelled') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
@@ -98,16 +97,12 @@
                                     @if ($res->status === 'pending' || $res->status === 'confirmed')
                                         <form action="{{ route('reservations.check-in', $res->id) }}" method="POST" class="inline">
                                             @csrf
-                                            <button type="submit" class="px-2.5 py-1.5 text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-lg transition">
-                                                Check In
-                                            </button>
+                                            <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-lg transition">Check In</button>
                                         </form>
                                     @elseif ($res->status === 'checked_in')
                                         <form action="{{ route('reservations.check-out', $res->id) }}" method="POST" class="inline">
                                             @csrf
-                                            <button type="submit" class="px-2.5 py-1.5 text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition">
-                                                Check Out
-                                            </button>
+                                            <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition">Check Out</button>
                                         </form>
                                     @else
                                         <span class="text-xs text-slate-400 font-medium">Selesai</span>
@@ -116,14 +111,14 @@
                                 <td class="px-6 py-4 text-right space-y-2 text-xs font-bold">
                                     <div class="flex flex-col gap-2">
                                         @if($res->checkin_token)
-                                            <a href="{{ route('checkin.show', $res->checkin_token) }}" target="_blank" class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-bold text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition">Link Check-in</a>
+                                            <a href="{{ route('checkin.show', $res->checkin_token) }}" target="_blank" class="inline-flex items-center justify-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition">Link Check-in</a>
                                         @endif
                                         <div class="flex gap-2 justify-end">
-                                            <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                                            <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
                                             <form action="{{ route('reservations.destroy', $res->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data reservasi ini?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
+                                                <button type="submit" class="inline-flex items-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                             </form>
                                         </div>
                                     </div>
@@ -132,6 +127,48 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card List -->
+            <div class="block md:hidden divide-y divide-slate-50">
+                @foreach ($reservations as $res)
+                    <div class="p-4 space-y-3">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex-grow min-w-0">
+                                <h4 class="font-bold text-slate-900">{{ $res->guest->name }}</h4>
+                                <p class="text-xs text-slate-400">{{ $res->guest->phone }}</p>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold shrink-0
+                                @if ($res->status === 'checked_in') bg-blue-50 text-blue-700 @elseif ($res->status === 'checked_out') bg-slate-100 text-slate-600 @elseif ($res->status === 'confirmed') bg-emerald-50 text-emerald-700 @elseif ($res->status === 'cancelled') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
+                                {{ ucfirst(str_replace('_', ' ', $res->status)) }}
+                            </span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 text-xs text-slate-500">
+                            <span class="inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded">🛏️ Kamar {{ $res->room->room_number }} ({{ $res->room->room_type }})</span>
+                            <span class="inline-flex items-center gap-1">📅 {{ $res->check_in->format('d M') }} - {{ $res->check_out->format('d M Y') }}</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-900">Rp {{ number_format($res->total_price, 0, ',', '.') }}</span>
+                            <div class="flex gap-2">
+                                @if ($res->status === 'pending' || $res->status === 'confirmed')
+                                    <form action="{{ route('reservations.check-in', $res->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-lg transition">Check In</button>
+                                    </form>
+                                @elseif ($res->status === 'checked_in')
+                                    <form action="{{ route('reservations.check-out', $res->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition">Check Out</button>
+                                    </form>
+                                @endif
+                                <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                                @if($res->checkin_token)
+                                    <a href="{{ route('checkin.show', $res->checkin_token) }}" target="_blank" class="inline-flex items-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition">Link</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
             <!-- Pagination -->

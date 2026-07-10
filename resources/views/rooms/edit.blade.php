@@ -34,19 +34,19 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                     <label for="room_number" class="block text-sm font-semibold text-slate-700">Nomor / Nama Kamar</label>
-                    <input id="room_number" name="room_number" type="text" required value="{{ old('room_number', $room->room_number) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="room_number" name="room_number" type="text" required value="{{ old('room_number', $room->room_number) }}" autocomplete="off" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
 
                 <div>
                     <label for="room_type" class="block text-sm font-semibold text-slate-700">Tipe / Jenis Kamar</label>
-                    <input id="room_type" name="room_type" type="text" required value="{{ old('room_type', $room->room_type) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="room_type" name="room_type" type="text" required value="{{ old('room_type', $room->room_type) }}" autocomplete="off" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                     <label for="price_per_night" class="block text-sm font-semibold text-slate-700">Harga per Malam (Rp)</label>
-                    <input id="price_per_night" name="price_per_night" type="number" min="0" required value="{{ old('price_per_night', intval($room->price_per_night)) }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                    <input id="price_per_night" name="price_per_night" type="number" min="0" required value="{{ old('price_per_night', intval($room->price_per_night)) }}" inputmode="numeric" autocomplete="off" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
 
                 <div>
@@ -61,14 +61,14 @@
 
             <div>
                 <label for="description" class="block text-sm font-semibold text-slate-700">Deskripsi Kamar</label>
-                <textarea id="description" name="description" rows="3" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">{{ old('description', $room->description) }}</textarea>
+                <textarea id="description" name="description" rows="3" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">{{ old('description', $room->description) }}</textarea>
             </div>
 
-            <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100">
-                <a href="{{ route('rooms.index') }}" class="px-4 py-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+                <a href="{{ route('rooms.index') }}" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition w-full sm:w-auto">
                     Batal
                 </a>
-                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
+                <button type="submit" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md w-full sm:w-auto">
                     Perbarui Kamar
                 </button>
             </div>

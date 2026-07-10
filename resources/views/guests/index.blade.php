@@ -34,7 +34,7 @@
         </form>
     </div>
 
-    <!-- Guests Table -->
+    <!-- Guests Table / Card List -->
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
         @if ($guests->isEmpty())
             <div class="text-center py-16 text-slate-400">
@@ -42,7 +42,8 @@
                 <p class="text-xs mt-1">Coba sesuaikan pencarian Anda atau daftarkan tamu baru.</p>
             </div>
         @else
-            <div class="w-full block overflow-x-auto">
+            <!-- Desktop Table -->
+            <div class="hidden md:block w-full overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -56,30 +57,46 @@
                     <tbody class="divide-y divide-slate-50 font-medium text-slate-700">
                         @foreach ($guests as $guest)
                             <tr>
-                                <td class="px-6 py-4 font-bold text-slate-900">
-                                    {{ $guest->name }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $guest->identity_number }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ $guest->phone }}
-                                </td>
-                                <td class="px-6 py-4 text-slate-500">
-                                    {{ $guest->email ?? '-' }}
-                                </td>
+                                <td class="px-6 py-4 font-bold text-slate-900">{{ $guest->name }}</td>
+                                <td class="px-6 py-4">{{ $guest->identity_number }}</td>
+                                <td class="px-6 py-4">{{ $guest->phone }}</td>
+                                <td class="px-6 py-4 text-slate-500">{{ $guest->email ?? '-' }}</td>
                                 <td class="px-6 py-4 text-right space-x-2 text-xs font-bold">
-                                    <a href="{{ route('guests.edit', $guest->id) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                                    <a href="{{ route('guests.edit', $guest->id) }}" class="inline-flex items-center px-3 py-1.5 min-h-[36px] font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
                                     <form action="{{ route('guests.destroy', $guest->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data tamu ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 min-h-[36px] font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card List -->
+            <div class="block md:hidden divide-y divide-slate-50">
+                @foreach ($guests as $guest)
+                    <div class="p-4 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[var(--color-teak-deep)]/10 text-[var(--color-teak-deep)] font-extrabold flex items-center justify-center shrink-0 text-sm">
+                            {{ strtoupper(mb_substr($guest->name, 0, 2)) }}
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <h4 class="font-bold text-slate-900">{{ $guest->name }}</h4>
+                            <p class="text-xs text-slate-500 truncate">{{ $guest->identity_number }} · {{ $guest->phone }}</p>
+                            <p class="text-xs text-slate-400 truncate">{{ $guest->email ?? '-' }}</p>
+                        </div>
+                        <div class="flex gap-2 shrink-0">
+                            <a href="{{ route('guests.edit', $guest->id) }}" class="inline-flex items-center justify-center px-3 min-h-[36px] text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                            <form action="{{ route('guests.destroy', $guest->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data tamu ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center justify-center px-3 min-h-[36px] text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
             <!-- Pagination -->

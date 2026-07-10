@@ -19,19 +19,19 @@
                 @csrf
                 <div>
                     <label for="email" class="block text-sm font-semibold mb-1 text-panel">Email</label>
-                    <input id="email" name="email" type="email" required value="{{ old('email') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel">
+                    <input id="email" name="email" type="email" required value="{{ old('email') }}" inputmode="email" autocomplete="email" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                 </div>
                 <div>
                     <div class="flex items-center justify-between">
                         <label for="password" class="block text-sm font-semibold mb-1 text-panel">Password</label>
                         <a href="#" class="text-sm text-marigold hover:text-marigold-deep">Forgot your password?</a>
                     </div>
-                    <input id="password" name="password" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel">
+                    <input id="password" name="password" type="password" required autocomplete="current-password" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                 </div>
-                <button type="submit" class="w-full flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
+                <button type="submit" class="w-full flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
                     Login
                 </button>
-                <button type="button" class="w-full flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-panel transition bg-transparent border border-ink-soft hover:bg-ink-soft">
+                <button type="button" class="w-full flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-panel transition bg-transparent border border-ink-soft hover:bg-ink-soft">
                     Login with Google
                 </button>
             </form>

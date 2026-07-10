@@ -67,12 +67,12 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label for="check_in" class="block text-sm font-semibold text-slate-700">Tanggal Check-in</label>
-                        <input id="check_in" name="check_in" type="date" required min="{{ date('Y-m-d') }}" value="{{ old('check_in') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                        <input id="check_in" name="check_in" type="date" required min="{{ date('Y-m-d') }}" value="{{ old('check_in') }}" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                     </div>
 
                     <div>
                         <label for="check_out" class="block text-sm font-semibold text-slate-700">Tanggal Check-out</label>
-                        <input id="check_out" name="check_out" type="date" required value="{{ old('check_out') }}" class="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] sm:text-sm">
+                        <input id="check_out" name="check_out" type="date" required value="{{ old('check_out') }}" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                     </div>
                 </div>
 
@@ -86,11 +86,11 @@
                 </div>
             </div>
 
-            <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100">
-                <a href="{{ route('reservations.index') }}" class="px-4 py-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+                <a href="{{ route('reservations.index') }}" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition w-full sm:w-auto">
                     Batal
                 </a>
-                <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-indigo-600/10">
+                <button type="submit" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md w-full sm:w-auto">
                     Simpan Reservasi
                 </button>
             </div>

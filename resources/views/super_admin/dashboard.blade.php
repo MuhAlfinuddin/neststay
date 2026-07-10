@@ -56,7 +56,8 @@
         @if ($homestays->isEmpty())
             <p class="text-slate-400 text-center py-12">Belum ada tenant yang terdaftar dalam platform SaaS StayNest.</p>
         @else
-            <div class="overflow-x-auto">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-100 text-sm">
                     <thead>
                         <tr class="text-left font-semibold text-slate-400 bg-slate-50/50">
@@ -84,12 +85,8 @@
                                         <span class="text-xs text-red-500 font-bold">Tanpa Pemilik</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ $homestay->phone ?? '-' }}
-                                </td>
-                                <td class="px-6 py-4 text-slate-500">
-                                    {{ $homestay->created_at->format('d M Y') }}
-                                </td>
+                                <td class="px-6 py-4">{{ $homestay->phone ?? '-' }}</td>
+                                <td class="px-6 py-4 text-slate-500">{{ $homestay->created_at->format('d M Y') }}</td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold
                                         @if ($homestay->status === 'active') bg-emerald-50 text-emerald-700 @else bg-red-50 text-red-700 @endif">
@@ -99,7 +96,7 @@
                                 <td class="px-6 py-4 text-right">
                                     <form action="{{ route('super-admin.homestays.toggle-status', $homestay->id) }}" method="POST" class="inline">
                                         @csrf
-                                        <button type="submit" class="px-3 py-1.5 text-xs font-bold rounded-lg transition border
+                                        <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold rounded-lg transition border
                                             @if ($homestay->status === 'active') border-red-200 text-red-600 hover:bg-red-50 @else border-emerald-200 text-emerald-600 hover:bg-emerald-50 @endif">
                                             {{ $homestay->status === 'active' ? 'Tangguhkan (Suspend)' : 'Aktifkan (Activate)' }}
                                         </button>
@@ -109,6 +106,39 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile Card List -->
+            <div class="block md:hidden divide-y divide-slate-50">
+                @foreach ($homestays as $homestay)
+                    <div class="p-4 space-y-2">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex-grow min-w-0">
+                                <h4 class="font-bold text-slate-900">{{ $homestay->name }}</h4>
+                                <p class="text-xs text-slate-400">Slug: {{ $homestay->slug }}</p>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold shrink-0
+                                @if ($homestay->status === 'active') bg-emerald-50 text-emerald-700 @else bg-red-50 text-red-700 @endif">
+                                {{ ucfirst($homestay->status) }}
+                            </span>
+                        </div>
+                        @php $owner = $homestay->users->first(); @endphp
+                        @if ($owner)
+                            <p class="text-xs text-slate-500">{{ $owner->name }} · {{ $owner->email }}</p>
+                        @endif
+                        <div class="flex items-center justify-between text-xs text-slate-500">
+                            <span>{{ $homestay->phone ?? '-' }}</span>
+                            <span>{{ $homestay->created_at->format('d M Y') }}</span>
+                        </div>
+                        <form action="{{ route('super-admin.homestays.toggle-status', $homestay->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full py-2 min-h-[36px] text-xs font-bold rounded-lg transition border
+                                @if ($homestay->status === 'active') border-red-200 text-red-600 hover:bg-red-50 @else border-emerald-200 text-emerald-600 hover:bg-emerald-50 @endif">
+                                {{ $homestay->status === 'active' ? 'Tangguhkan (Suspend)' : 'Aktifkan (Activate)' }}
+                            </button>
+                        </form>
+                    </div>
+                @endforeach
             </div>
 
             <!-- Pagination -->

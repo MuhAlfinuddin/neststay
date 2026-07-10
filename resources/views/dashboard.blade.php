@@ -29,12 +29,12 @@
             <h1 class="text-2xl md:text-3xl font-extrabold text-[var(--color-teak-deep)]">Selamat Datang di StayNest!</h1>
             <p class="text-xs md:text-sm text-[var(--color-ink-soft)] mt-1">Berikut adalah ikhtisar operasional homestay Anda hari ini.</p>
         </div>
-        <div class="flex space-x-3 w-full md:w-auto">
-            <a href="{{ route('reservations.create') }}" class="flex-grow md:flex-none inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-[var(--color-teak)]/10">
-                + Reservasi Baru
+        <div class="flex gap-3 w-full md:w-auto">
+            <a href="{{ route('reservations.create') }}" class="flex-1 md:flex-none inline-flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition shadow-md shadow-[var(--color-teak)]/10">
+                + Reservasi
             </a>
-            <a href="{{ route('rooms.create') }}" class="flex-grow md:flex-none inline-flex items-center justify-center px-4 py-2.5 text-sm font-bold text-[var(--color-teak-deep)] bg-[var(--color-paper)] border border-[var(--color-paper-deep)] hover:bg-[var(--color-paper-deep)] rounded-xl transition">
-                + Tambah Kamar
+            <a href="{{ route('rooms.create') }}" class="flex-1 md:flex-none inline-flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-bold text-[var(--color-teak-deep)] bg-[var(--color-paper)] border border-[var(--color-paper-deep)] hover:bg-[var(--color-paper-deep)] rounded-xl transition">
+                + Kamar
             </a>
         </div>
     </div>

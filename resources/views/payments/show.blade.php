@@ -14,7 +14,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #f8fafc;
             color: #0f172a;
-            padding: 2rem 1rem;
+            padding: 1rem;
         }
         .invoice-card {
             background-color: #ffffff;
@@ -23,7 +23,11 @@
             border-radius: 1rem;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
             border: 1px solid #e2e8f0;
-            padding: 2.5rem;
+            padding: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            body { padding: 2rem; }
+            .invoice-card { padding: 2.5rem; }
         }
         @media print {
             body {
@@ -54,9 +58,9 @@
         </div>
 
         <!-- Invoice Header -->
-        <div class="flex justify-between items-start">
+        <div class="flex flex-col sm:flex-row justify-between items-start gap-6">
             <div>
-                <h1 class="text-3xl font-black text-indigo-600">Stay<span class="text-emerald-500">Nest</span></h1>
+                <h1 class="text-2xl sm:text-3xl font-black text-indigo-600">Stay<span class="text-emerald-500">Nest</span></h1>
                 <p class="text-xs text-slate-400 font-semibold uppercase mt-1">Platform Manajemen Homestay SaaS</p>
                 <div class="mt-4 text-sm text-slate-500">
                     <p class="font-bold text-slate-800">{{ $payment->homestay->name }}</p>
@@ -64,8 +68,8 @@
                     <p>Telp: {{ $payment->homestay->phone }}</p>
                 </div>
             </div>
-            <div class="text-right">
-                <h2 class="text-xl font-bold text-slate-800">NOTA PEMBAYARAN</h2>
+            <div class="sm:text-right">
+                <h2 class="text-lg sm:text-xl font-bold text-slate-800">NOTA PEMBAYARAN</h2>
                 <p class="text-sm text-slate-500 mt-1">No: #SN-{{ $payment->id }}</p>
                 <p class="text-sm text-slate-500">Tanggal: {{ $payment->payment_date->format('d M Y H:i') }}</p>
                 <div class="mt-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase">
@@ -74,7 +78,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-8 mt-12 pb-8 border-b border-slate-100">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mt-8 sm:mt-12 pb-8 border-b border-slate-100">
             <div>
                 <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Ditujukan Kepada (Tamu):</p>
                 <p class="text-base font-bold text-slate-800 mt-2">{{ $payment->reservation->guest->name }}</p>
@@ -90,32 +94,34 @@
         </div>
 
         <!-- Table Billing Details -->
-        <table class="min-w-full divide-y divide-slate-100 text-sm mt-8">
-            <thead>
-                <tr class="text-left font-bold text-slate-400 bg-slate-50">
-                    <th class="px-4 py-3">Deskripsi Layanan</th>
-                    <th class="px-4 py-3 text-right">Harga Satuan</th>
-                    <th class="px-4 py-3 text-right">Durasi</th>
-                    <th class="px-4 py-3 text-right">Total Tarif</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-50 font-medium text-slate-700">
-                <tr>
-                    <td class="px-4 py-4">
-                        Sewa Kamar No. {{ $payment->reservation->room->room_number }} ({{ $payment->reservation->room->room_type }})
-                    </td>
-                    <td class="px-4 py-4 text-right">
-                        Rp {{ number_format($payment->reservation->room->price_per_night, 0, ',', '.') }}
-                    </td>
-                    <td class="px-4 py-4 text-right">
-                        {{ max(1, $payment->reservation->check_in->diffInDays($payment->reservation->check_out)) }} malam
-                    </td>
-                    <td class="px-4 py-4 text-right font-bold text-slate-900">
-                        Rp {{ number_format($payment->reservation->total_price, 0, ',', '.') }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="overflow-x-auto mt-8">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead>
+                    <tr class="text-left font-bold text-slate-400 bg-slate-50">
+                        <th class="px-3 sm:px-4 py-3">Deskripsi Layanan</th>
+                        <th class="px-3 sm:px-4 py-3 text-right whitespace-nowrap">Harga Satuan</th>
+                        <th class="px-3 sm:px-4 py-3 text-right whitespace-nowrap">Durasi</th>
+                        <th class="px-3 sm:px-4 py-3 text-right whitespace-nowrap">Total Tarif</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50 font-medium text-slate-700">
+                    <tr>
+                        <td class="px-3 sm:px-4 py-4 text-xs sm:text-sm">
+                            Sewa Kamar No. {{ $payment->reservation->room->room_number }} ({{ $payment->reservation->room->room_type }})
+                        </td>
+                        <td class="px-3 sm:px-4 py-4 text-right text-xs sm:text-sm whitespace-nowrap">
+                            Rp {{ number_format($payment->reservation->room->price_per_night, 0, ',', '.') }}
+                        </td>
+                        <td class="px-3 sm:px-4 py-4 text-right text-xs sm:text-sm whitespace-nowrap">
+                            {{ max(1, $payment->reservation->check_in->diffInDays($payment->reservation->check_out)) }} malam
+                        </td>
+                        <td class="px-3 sm:px-4 py-4 text-right font-bold text-slate-900 text-xs sm:text-sm whitespace-nowrap">
+                            Rp {{ number_format($payment->reservation->total_price, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Summary Totals -->
         <div class="mt-8 border-t border-slate-100 pt-6 flex justify-end">

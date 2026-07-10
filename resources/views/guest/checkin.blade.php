@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check-in Tamu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .pb-safe-checkin { padding-bottom: env(safe-area-inset-bottom); }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 p-4 sm:p-6">
-    <div class="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+<body class="bg-slate-50 p-4 sm:p-6 flex items-center justify-center min-h-screen">
+    <div class="max-w-md w-full mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-100">
         <!-- Logo -->
         <div class="text-center mb-6">
              <span class="text-2xl font-black text-[var(--color-teak-deep)]">Stay<span class="text-[var(--color-leaf)]">Nest</span></span>
@@ -29,13 +34,13 @@
                 <label class="block text-sm font-medium text-slate-700 mb-2">Foto KTP</label>
                 <div class="relative">
                     <input type="file" name="ktp_photo" id="ktp_photo" class="hidden" onchange="document.getElementById('file-name').textContent = this.files[0].name" required>
-                    <label for="ktp_photo" class="cursor-pointer block w-full py-4 px-4 bg-white border-2 border-dashed border-slate-300 rounded-xl text-center text-sm text-slate-500 hover:border-[var(--color-marigold-deep)] hover:text-[var(--color-teak-deep)] transition">
+                    <label for="ktp_photo" class="cursor-pointer block w-full py-5 px-4 min-h-[60px] bg-white border-2 border-dashed border-slate-300 rounded-xl text-center text-sm text-slate-500 hover:border-[var(--color-marigold-deep)] hover:text-[var(--color-teak-deep)] transition">
                         <span class="block mb-1">📸 Klik untuk pilih foto KTP</span>
                         <span id="file-name" class="font-bold text-xs text-slate-700">Belum ada file dipilih</span>
                     </label>
                 </div>
             </div>
-            <button type="submit" class="w-full py-4 bg-slate-900 text-white font-black text-base rounded-xl transition shadow-lg">
+            <button type="submit" class="w-full py-4 min-h-[52px] bg-slate-900 text-white font-black text-base rounded-xl transition shadow-lg">
                 Submit KTP Sekarang
             </button>
         </form>

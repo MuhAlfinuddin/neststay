@@ -32,30 +32,30 @@
                 <div class="space-y-4">
                     <div>
                         <label for="name" class="block text-sm font-semibold mb-1 text-panel">Full Name</label>
-                        <input id="name" name="name" type="text" required value="{{ old('name') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel" placeholder="John Doe">
+                        <input id="name" name="name" type="text" required value="{{ old('name') }}" autocomplete="name" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]" placeholder="John Doe">
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-semibold mb-1 text-panel">Email</label>
-                        <input id="email" name="email" type="email" required value="{{ old('email') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel" placeholder="m@example.com">
+                        <input id="email" name="email" type="email" required value="{{ old('email') }}" inputmode="email" autocomplete="email" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]" placeholder="m@example.com">
                         <p class="mt-1 text-xs text-ink-soft">We'll use this to contact you. We will not share your email with anyone else.</p>
                     </div>
                     <div>
                         <label for="password" class="block text-sm font-semibold mb-1 text-panel">Password</label>
-                        <input id="password" name="password" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel">
+                        <input id="password" name="password" type="password" required autocomplete="new-password" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                         <p class="mt-1 text-xs text-ink-soft">Must be at least 8 characters long.</p>
                     </div>
                     <div>
                         <label for="password_confirmation" class="block text-sm font-semibold mb-1 text-panel">Confirm Password</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel">
+                        <input id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                         <p class="mt-1 text-xs text-ink-soft">Please confirm your password.</p>
                     </div>
                 </div>
 
                 <div>
-                    <button type="submit" class="w-full flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
+                    <button type="submit" class="w-full flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
                         Create Account
                     </button>
-                    <button type="button" class="w-full mt-4 flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-panel transition bg-transparent border border-ink-soft hover:bg-ink-soft">
+                    <button type="button" class="w-full mt-4 flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-panel transition bg-transparent border border-ink-soft hover:bg-ink-soft">
                         Sign up with Google
                     </button>
                 </div>
