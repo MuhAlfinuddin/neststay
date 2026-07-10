@@ -56,29 +56,40 @@
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobileMenuToggle" class="p-3 text-[#6B5A44] hover:text-[#C6863A] focus:outline-none" aria-label="Toggle menu">
-                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button id="mobileMenuToggle" class="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center text-[#6B5A44] hover:text-[#C6863A] focus:outline-none" aria-label="Toggle menu">
+                        <svg id="guestHamburger" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="guestClose" class="h-8 w-8 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobileMenu" class="hidden md:hidden bg-[#FFFBF1] border-t border-[#EEE1C3] px-4 pt-2 pb-4 rounded-b-2xl">
-            <a href="{{ route('landing') }}#features" class="block py-2 text-sm font-medium text-[#6B5A44]">Fitur</a>
-            <a href="{{ route('landing') }}#pricing" class="block py-2 text-sm font-medium text-[#6B5A44]">Harga</a>
-            @guest
-                <a href="{{ route('login') }}" class="block py-2 text-sm font-semibold text-[#6B5A44]">Masuk</a>
-                <a href="{{ route('register') }}" class="block py-2 text-sm font-bold text-[#C6863A]">Coba Gratis</a>
-            @endguest
+        <!-- Mobile Menu (Animated slide-down) -->
+        <div id="mobileMenu" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 bg-[#FFFBF1] border-t border-[#EEE1C3] rounded-b-2xl">
+            <div class="px-4 py-3 space-y-1">
+                <a href="{{ route('landing') }}#features" class="block py-3 min-h-[44px] text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] flex items-center">Fitur</a>
+                <a href="{{ route('landing') }}#pricing" class="block py-3 min-h-[44px] text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] flex items-center">Harga</a>
+                @guest
+                    <hr class="border-[#EEE1C3] my-1">
+                    <a href="{{ route('login') }}" class="block py-3 min-h-[44px] text-sm font-semibold text-[#6B5A44] hover:text-[#C6863A] flex items-center">Masuk</a>
+                    <a href="{{ route('register') }}" class="block py-3 min-h-[44px] text-sm font-bold text-[#C6863A] hover:text-[#E3A857] flex items-center">Coba Gratis</a>
+                @endguest
+            </div>
         </div>
     </nav>
 
     <script>
         document.getElementById('mobileMenuToggle').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
+            var menu = document.getElementById('mobileMenu');
+            var isOpen = menu.classList.contains('max-h-0');
+            menu.classList.toggle('max-h-0', !isOpen);
+            menu.classList.toggle('max-h-96', isOpen);
+            document.getElementById('guestHamburger').classList.toggle('hidden', isOpen);
+            document.getElementById('guestClose').classList.toggle('hidden', !isOpen);
         });
     </script>
 
