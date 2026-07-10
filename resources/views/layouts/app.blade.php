@@ -26,7 +26,7 @@
 <body class="bg-[var(--color-paper)] text-[var(--color-ink)] selection:bg-[var(--color-marigold)] selection:text-[var(--color-ink)] min-h-screen flex">
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-[var(--color-teak-deep)] text-[#F6EFDC] flex flex-col justify-between border-r border-[var(--color-teak)] hidden md:flex">
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-64 bg-[var(--color-teak-deep)] text-[#F6EFDC] flex flex-col justify-between border-l border-[var(--color-teak)] hidden md:flex md:left-0 md:right-auto md:border-r">
         <div>
             <!-- Header Brand -->
             <div class="h-16 flex items-center px-6 border-b border-[var(--color-teak)]">
@@ -100,15 +100,10 @@
     </aside>
 
     <!-- Main Content Area -->
-    <div class="flex-grow flex flex-col min-h-screen min-w-0 w-full transition-all duration-300 md:pl-64">
+    <div class="flex-grow flex flex-col min-h-screen min-w-0 w-full transition-all duration-300 md:ml-64">
         <!-- Header Top Navbar -->
         <header class="h-16 bg-[var(--color-paper)]/70 backdrop-blur-md border-b border-[var(--color-teak)]/30 flex items-center justify-between px-4 sticky top-0 z-40">
             <div class="flex items-center">
-                <button id="sidebarToggle" class="md:hidden mr-4 p-2 text-[var(--color-teak-deep)] focus:outline-none">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
                 <h2 class="text-lg font-bold text-[var(--color-teak-deep)] truncate">
                     @yield('header_title', 'StayNest Dashboard')
                 </h2>
@@ -121,6 +116,11 @@
                 <div class="w-10 h-10 rounded-full bg-[var(--color-teak-deep)]/10 text-[var(--color-teak-deep)] font-extrabold flex items-center justify-center">
                     {{ strtoupper(mb_substr(auth()->user()->name, 0, 2)) }}
                 </div>
+                <button id="sidebarToggle" class="md:hidden ml-4 p-2 text-[var(--color-teak-deep)] focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
         </header>
 
@@ -154,7 +154,9 @@
     </div>
     <script>
         document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('hidden');
+            const sidebar = document.getElementById('sidebar');
+            // Toggle visibility. Jika sidebar di kanan, pastikan transisi mulus.
+            sidebar.classList.toggle('hidden');
         });
     </script>
 </body>
