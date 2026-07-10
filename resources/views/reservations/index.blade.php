@@ -130,40 +130,63 @@
             </div>
 
             <!-- Mobile Card List -->
-            <div class="block md:hidden divide-y divide-slate-50">
+            <div class="block md:hidden space-y-4 p-4">
                 @foreach ($reservations as $res)
-                    <div class="p-4 space-y-3">
-                        <div class="flex items-start justify-between gap-3">
-                            <div class="flex-grow min-w-0">
-                                <h4 class="font-bold text-slate-900">{{ $res->guest->name }}</h4>
-                                <p class="text-xs text-slate-400">{{ $res->guest->phone }}</p>
+                    @php
+                        $statusStyles = [
+                            'pending' => ['border' => 'border-amber-300', 'bg' => 'bg-amber-50', 'badge' => 'bg-amber-100 text-amber-700', 'icon' => '⏳'],
+                            'confirmed' => ['border' => 'border-emerald-300', 'bg' => 'bg-emerald-50', 'badge' => 'bg-emerald-100 text-emerald-700', 'icon' => '✅'],
+                            'checked_in' => ['border' => 'border-blue-300', 'bg' => 'bg-blue-50', 'badge' => 'bg-blue-100 text-blue-700', 'icon' => '🛌'],
+                            'checked_out' => ['border' => 'border-slate-300', 'bg' => 'bg-slate-50', 'badge' => 'bg-slate-100 text-slate-600', 'icon' => '🚪'],
+                            'cancelled' => ['border' => 'border-red-300', 'bg' => 'bg-red-50', 'badge' => 'bg-red-100 text-red-700', 'icon' => '❌'],
+                        ];
+                        $s = $statusStyles[$res->status] ?? $statusStyles['pending'];
+                    @endphp
+                    <div class="rounded-2xl border-2 {{ $s['border'] }} {{ $s['bg'] }} shadow-sm overflow-hidden">
+                        <div class="p-4 space-y-3">
+                            <!-- Guest Info Header -->
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 rounded-full bg-[var(--color-teak-deep)]/10 text-[var(--color-teak-deep)] font-extrabold flex items-center justify-center shrink-0 text-sm">
+                                        {{ strtoupper(mb_substr($res->guest->name, 0, 2)) }}
+                                    </div>
+                                    <div class="min-w-0">
+                                        <h4 class="font-bold text-slate-900 truncate">{{ $res->guest->name }}</h4>
+                                        <p class="text-xs text-slate-400">{{ $res->guest->phone }}</p>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold shrink-0 whitespace-nowrap {{ $s['badge'] }}">
+                                    {{ $s['icon'] }} {{ ucfirst(str_replace('_', ' ', $res->status)) }}
+                                </span>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold shrink-0
-                                @if ($res->status === 'checked_in') bg-blue-50 text-blue-700 @elseif ($res->status === 'checked_out') bg-slate-100 text-slate-600 @elseif ($res->status === 'confirmed') bg-emerald-50 text-emerald-700 @elseif ($res->status === 'cancelled') bg-red-50 text-red-700 @else bg-amber-50 text-amber-700 @endif">
-                                {{ ucfirst(str_replace('_', ' ', $res->status)) }}
-                            </span>
-                        </div>
-                        <div class="flex flex-wrap gap-2 text-xs text-slate-500">
-                            <span class="inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded">🛏️ Kamar {{ $res->room->room_number }} ({{ $res->room->room_type }})</span>
-                            <span class="inline-flex items-center gap-1">📅 {{ $res->check_in->format('d M') }} - {{ $res->check_out->format('d M Y') }}</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="font-bold text-slate-900">Rp {{ number_format($res->total_price, 0, ',', '.') }}</span>
-                            <div class="flex gap-2">
+
+                            <!-- Room & Date -->
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
+                                <span class="inline-flex items-center gap-1.5">🛏️ Kamar {{ $res->room->room_number }} <span class="text-slate-400">({{ $res->room->room_type }})</span></span>
+                                <span class="inline-flex items-center gap-1.5">📅 {{ $res->check_in->format('d M') }} → {{ $res->check_out->format('d M Y') }}</span>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="text-center py-1">
+                                <span class="text-xl font-black text-slate-900">Rp {{ number_format($res->total_price, 0, ',', '.') }}</span>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex flex-wrap gap-2">
                                 @if ($res->status === 'pending' || $res->status === 'confirmed')
-                                    <form action="{{ route('reservations.check-in', $res->id) }}" method="POST">
+                                    <form action="{{ route('reservations.check-in', $res->id) }}" method="POST" class="flex-1 min-w-[100px]">
                                         @csrf
-                                        <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-lg transition">Check In</button>
+                                        <button type="submit" class="w-full flex items-center justify-center px-3 py-2.5 min-h-[44px] text-xs font-bold text-white bg-[var(--color-marigold-deep)] hover:bg-[var(--color-teak-deep)] rounded-xl transition">Check In</button>
                                     </form>
                                 @elseif ($res->status === 'checked_in')
-                                    <form action="{{ route('reservations.check-out', $res->id) }}" method="POST">
+                                    <form action="{{ route('reservations.check-out', $res->id) }}" method="POST" class="flex-1 min-w-[100px]">
                                         @csrf
-                                        <button type="submit" class="px-3 py-1.5 min-h-[36px] text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition">Check Out</button>
+                                        <button type="submit" class="w-full flex items-center justify-center px-3 py-2.5 min-h-[44px] text-xs font-bold text-white bg-slate-800 hover:bg-slate-900 rounded-xl transition">Check Out</button>
                                     </form>
                                 @endif
-                                <a href="{{ route('reservations.edit', $res->id) }}" class="inline-flex items-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-indigo-700 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition">Edit</a>
+                                <a href="{{ route('reservations.edit', $res->id) }}" class="flex-1 min-w-[80px] flex items-center justify-center px-3 py-2.5 min-h-[44px] text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition">Edit</a>
                                 @if($res->checkin_token)
-                                    <a href="{{ route('checkin.show', $res->checkin_token) }}" target="_blank" class="inline-flex items-center px-3 py-1.5 min-h-[36px] text-xs font-bold text-teal-700 bg-teal-50 rounded-lg hover:bg-teal-100 transition">Link</a>
+                                    <a href="{{ route('checkin.show', $res->checkin_token) }}" target="_blank" class="flex-1 min-w-[80px] flex items-center justify-center px-3 py-2.5 min-h-[44px] text-xs font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 rounded-xl transition">Link</a>
                                 @endif
                             </div>
                         </div>

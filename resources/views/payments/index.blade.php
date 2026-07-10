@@ -100,33 +100,56 @@
             </div>
 
             <!-- Mobile Card List -->
-            <div class="block md:hidden divide-y divide-slate-50">
+            <div class="block md:hidden space-y-4 p-4">
                 @foreach ($payments as $payment)
-                    <div class="p-4 space-y-3">
-                        <div class="flex items-start justify-between gap-3">
-                            <div class="flex-grow min-w-0">
-                                <h4 class="font-bold text-slate-900">{{ $payment->reservation->guest->name }}</h4>
-                                <p class="text-xs text-slate-400">Kamar {{ $payment->reservation->room->room_number }}</p>
+                    @php
+                        $methodIcons = ['cash' => '💵', 'transfer' => '🏦', 'card' => '💳', 'qris' => '📱'];
+                        $methodIcon = $methodIcons[$payment->payment_method] ?? '💳';
+                        $statusStyles = [
+                            'paid' => ['border' => 'border-emerald-300', 'bg' => 'bg-emerald-50', 'badge' => 'bg-emerald-100 text-emerald-700', 'icon' => '✅'],
+                            'down_payment' => ['border' => 'border-amber-300', 'bg' => 'bg-amber-50', 'badge' => 'bg-amber-100 text-amber-700', 'icon' => '💸'],
+                        ];
+                        $s = $statusStyles[$payment->payment_status] ?? ['border' => 'border-red-300', 'bg' => 'bg-red-50', 'badge' => 'bg-red-100 text-red-700', 'icon' => '❌'];
+                    @endphp
+                    <div class="rounded-2xl border-2 {{ $s['border'] }} {{ $s['bg'] }} shadow-sm overflow-hidden">
+                        <div class="p-4 space-y-3">
+                            <!-- Header: Guest + Status -->
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="min-w-0">
+                                    <h4 class="font-bold text-slate-900 truncate">{{ $payment->reservation->guest->name }}</h4>
+                                    <p class="text-xs text-slate-400">Kamar {{ $payment->reservation->room->room_number }}</p>
+                                </div>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold shrink-0 whitespace-nowrap {{ $s['badge'] }}">
+                                    {{ $s['icon'] }} {{ ucfirst(str_replace('_', ' ', $payment->payment_status)) }}
+                                </span>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold shrink-0
-                                @if ($payment->payment_status === 'paid') bg-emerald-50 text-emerald-700 @elseif ($payment->payment_status === 'down_payment') bg-amber-50 text-amber-700 @else bg-red-50 text-red-700 @endif">
-                                {{ ucfirst(str_replace('_', ' ', $payment->payment_status)) }}
-                            </span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-xs text-slate-500 space-y-0.5">
-                                <p>{{ $payment->payment_date->format('d M Y H:i') }}</p>
-                                <p class="capitalize">{{ $payment->payment_method }}</p>
+
+                            <!-- Amount -->
+                            <div class="text-center py-1">
+                                <span class="text-2xl font-black text-slate-900">Rp {{ number_format($payment->amount, 0, ',', '.') }}</span>
                             </div>
-                            <span class="font-bold text-slate-900">Rp {{ number_format($payment->amount, 0, ',', '.') }}</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="{{ route('payments.show', $payment->id) }}" target="_blank" class="flex-1 inline-flex items-center justify-center px-3 py-2 min-h-[36px] text-xs font-bold text-indigo-600 border border-indigo-100 hover:bg-indigo-50 rounded-lg transition">Nota</a>
-                            <form action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Apakah Anda yakin ingin menghapus catatan transaksi ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="w-full inline-flex items-center justify-center px-3 py-2 min-h-[36px] text-xs font-bold text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition">Hapus</button>
-                            </form>
+
+                            <!-- Method + Date -->
+                            <div class="flex items-center justify-center gap-4 text-xs text-slate-500">
+                                <span class="inline-flex items-center gap-1.5">{{ $methodIcon }} <span class="capitalize">{{ $payment->payment_method }}</span></span>
+                                <span class="inline-flex items-center gap-1.5">📅 {{ $payment->payment_date->format('d M Y H:i') }}</span>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex gap-3">
+                                <a href="{{ route('payments.show', $payment->id) }}" target="_blank"
+                                   class="flex-1 flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-bold text-indigo-600 border-2 border-indigo-200 hover:bg-indigo-50 rounded-xl transition">
+                                    📄 Nota
+                                </a>
+                                <form action="{{ route('payments.destroy', $payment->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Apakah Anda yakin ingin menghapus catatan transaksi ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="w-full flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 rounded-xl transition">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endforeach
