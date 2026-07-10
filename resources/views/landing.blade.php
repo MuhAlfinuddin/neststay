@@ -268,7 +268,7 @@
     display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 20px;
   }
   .closing-foot{position:absolute; bottom:20px; left:0; width:100%; color:rgba(246,239,220,0.6); font-size:12px;}
-  @media(max-width:760px){
+  @media(max-width:768px){
     .closing-page{background-attachment:scroll;}
   }
 
@@ -304,7 +304,7 @@
   .dot{width:8px; height:8px; border-radius:50%; background:rgba(107,90,68,0.3);}
   .dot.active{background:var(--teak-deep);}
 
-  @media(max-width:760px){
+  @media(max-width:768px){
     body{overflow:auto;}
     .book{height:auto; overflow-x:visible; overflow-y:visible; display:block; scroll-snap-type:none;}
     .page{height:auto; min-height:100vh; padding:60px 4vw 90px;}
