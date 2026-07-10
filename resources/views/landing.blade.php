@@ -311,9 +311,9 @@
     .tabs-index{display:none;}
     .kunci-wrap{flex-direction:column;}
     .stamps-row{gap:22px;}
-    .price-cards { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 20px; }
-    .price-page { padding-bottom: 120px !important; height: auto !important; }
-    .price-card { width: 100%; min-width: 100% !important; margin-bottom: 20px; flex-shrink: 0; }
+    .price-cards { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 20px; padding: 0 10px; }
+    .price-page { padding-bottom: 120px !important; height: auto !important; padding-top: 50px; }
+    .price-card { width: 100%; min-width: auto !important; margin-bottom: 20px; flex-shrink: 0; padding: 20px; }
   }
 </style>
 </head>
