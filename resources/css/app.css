@@ -20,3 +20,14 @@
     --color-marigold-deep: #C6863A;
     --color-clay: #B5533C;
 }
+
+@layer utilities {
+    .bg-paper { background-color: var(--color-paper); }
+    .bg-paper-deep { background-color: var(--color-paper-deep); }
+    .bg-panel { background-color: var(--color-panel); }
+    .text-ink { color: var(--color-ink); }
+    .text-ink-soft { color: var(--color-ink-soft); }
+    .bg-marigold-deep { background-color: var(--color-marigold-deep); }
+    .border-ink-soft { border-color: var(--color-ink-soft); }
+}
+@import 'globals.css';
