@@ -307,9 +307,11 @@
   @media(max-width:760px){
     body{overflow:auto;}
     .book{height:auto; overflow-x:visible; overflow-y:visible; display:block; scroll-snap-type:none;}
-    .page{height:auto; min-height:100vh; padding:70px 6vw 90px;}
+    .page{height:auto; min-height:100vh; padding:60px 4vw 90px;}
     .tabs-index{display:none;}
-    .kunci-wrap{flex-direction:column;}
+    .kunci-wrap{flex-direction:column; gap:30px;}
+    .pegboard { width: 100%; max-width: 340px; padding: 20px; }
+    .peg-grid { grid-template-columns: repeat(4, 1fr); gap: 10px 5px; }
     .stamps-row{gap:22px;}
     .price-cards { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 20px; padding: 0 10px; }
     .price-page { padding-bottom: 120px !important; height: auto !important; padding-top: 50px; }
