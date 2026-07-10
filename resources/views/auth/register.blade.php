@@ -6,33 +6,22 @@
 <div class="min-h-[90vh] flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-8 bg-paper">
     <div class="sm:mx-auto w-full max-w-lg">
         <h2 class="mt-6 text-center text-2xl sm:text-3xl font-bold tracking-tight text-ink">
-            Daftarkan Homestay Anda di StayNest
+            Create an account
         </h2>
         <p class="mt-2 text-center text-sm text-ink-soft">
-            Atau
-            <a href="{{ route('login') }}" class="text-marigold-deep font-semibold">
-                masuk jika sudah memiliki akun
-            </a>
+            Enter your information below to create your account
         </p>
     </div>
 
     <div class="mt-8 sm:mx-auto w-full max-w-lg">
-        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl sm:rounded-2xl bg-panel border border-paper-deep">
+        <div class="py-6 px-4 sm:py-8 sm:px-10 shadow-xl sm:rounded-2xl bg-ink border border-paper-deep text-panel">
             @if ($errors->any())
-                <div class="mb-6 rounded-lg p-4 bg-[#FEF2F2] border border-[#FEE2E2] text-[#991B1B]">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <span class="text-[#EF4444] font-bold">⚠️</span>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium">Terdapat beberapa kesalahan:</h3>
-                            <ul class="mt-2 list-disc list-inside text-xs space-y-1">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
+                <div class="mb-6 rounded-lg p-4 bg-red-900 border border-red-800 text-red-100">
+                    <ul class="list-disc list-inside text-xs space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -40,54 +29,40 @@
                 @csrf
                 <input type="hidden" name="plan" value="{{ request('plan', 'hemat') }}">
 
-                <div class="pb-6 border-b border-paper-deep">
-                    <h3 class="text-md font-bold mb-4 text-ink">1. Data Pemilik (Owner)</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label for="name" class="block text-sm font-semibold mb-1 text-ink">Nama Lengkap</label>
-                            <input id="name" name="name" type="text" required value="{{ old('name') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-semibold mb-1 text-ink">Alamat Email</label>
-                            <input id="email" name="email" type="email" required value="{{ old('email') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label for="password" class="block text-sm font-semibold mb-1 text-ink">Password</label>
-                                <input id="password" name="password" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">
-                            </div>
-                            <div>
-                                <label for="password_confirmation" class="block text-sm font-semibold mb-1 text-ink">Konfirmasi Password</label>
-                                <input id="password_confirmation" name="password_confirmation" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">
-                            </div>
-                        </div>
+                <div class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-semibold mb-1 text-panel">Full Name</label>
+                        <input id="name" name="name" type="text" required value="{{ old('name') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel" placeholder="John Doe">
                     </div>
-                </div>
-
-                <div class="pt-2">
-                    <h3 class="text-md font-bold mb-4 text-ink">2. Data Homestay</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label for="homestay_name" class="block text-sm font-semibold mb-1 text-ink">Nama Homestay / Villa</label>
-                            <input id="homestay_name" name="homestay_name" type="text" required value="{{ old('homestay_name') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">
-                        </div>
-                        <div>
-                            <label for="homestay_phone" class="block text-sm font-semibold mb-1 text-ink">Nomor Telepon Homestay</label>
-                            <input id="homestay_phone" name="homestay_phone" type="text" required value="{{ old('homestay_phone') }}" placeholder="Contoh: 08123456789" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">
-                        </div>
-                        <div>
-                            <label for="homestay_address" class="block text-sm font-semibold mb-1 text-ink">Alamat Lengkap</label>
-                            <textarea id="homestay_address" name="homestay_address" rows="3" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-transparent text-ink">{{ old('homestay_address') }}</textarea>
-                        </div>
+                    <div>
+                        <label for="email" class="block text-sm font-semibold mb-1 text-panel">Email</label>
+                        <input id="email" name="email" type="email" required value="{{ old('email') }}" class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel" placeholder="m@example.com">
+                        <p class="mt-1 text-xs text-ink-soft">We'll use this to contact you. We will not share your email with anyone else.</p>
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-semibold mb-1 text-panel">Password</label>
+                        <input id="password" name="password" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel">
+                        <p class="mt-1 text-xs text-ink-soft">Must be at least 8 characters long.</p>
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-semibold mb-1 text-panel">Confirm Password</label>
+                        <input id="password_confirmation" name="password_confirmation" type="password" required class="block w-full px-4 py-2 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel">
+                        <p class="mt-1 text-xs text-ink-soft">Please confirm your password.</p>
                     </div>
                 </div>
 
                 <div>
-                    <button type="submit" class="w-full flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-[#FBF6E9] transition bg-marigold-deep">
-                        Daftar & Buat Homestay
+                    <button type="submit" class="w-full flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
+                        Create Account
+                    </button>
+                    <button type="button" class="w-full mt-4 flex justify-center py-2.5 px-4 rounded-xl text-sm font-bold text-panel transition bg-transparent border border-ink-soft hover:bg-ink-soft">
+                        Sign up with Google
                     </button>
                 </div>
             </form>
+            <div class="mt-6 text-center text-sm text-ink-soft">
+                Already have an account? <a href="{{ route('login') }}" class="text-marigold hover:text-marigold-deep">Sign in</a>
+            </div>
         </div>
     </div>
 </div>
