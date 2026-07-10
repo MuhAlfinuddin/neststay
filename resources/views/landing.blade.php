@@ -342,6 +342,7 @@
   <section class="page cover" id="p0">
     <header style="position:absolute; top:20px; left:0; width:100%; padding:0 8vw; display:flex; justify-content:space-between; align-items:center; z-index:10;">
         <span style="font-size:1.5rem; font-weight:800; color:#F6EFDC;">StayNest</span>
+        <a href="{{ route('login') }}" style="font-size:14px; font-weight:600; color:#F6EFDC; padding:8px 16px; border:1px solid rgba(246,239,220,0.3); border-radius:8px; transition:0.2s;" onmouseover="this.style.borderColor='#E3A857'" onmouseout="this.style.borderColor='rgba(246,239,220,0.3)'">Masuk</a>
     </header>
 
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
@@ -357,10 +358,7 @@
         <h1 style="font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 16px;">StayNest</h1>
         <p style="font-size: clamp(1rem, 2vw, 1.25rem); max-width: 500px; line-height: 1.4; color:rgba(246,239,220,0.85); margin-bottom: 32px;">Teman kelola homestay keluarga — kamar, tamu, dan uang masuk, serapi papan kunci di meja resepsionis.</p>
 
-        <div class="flex flex-col sm:flex-row gap-4 items-center justify-center" style="margin-top: 8px;">
-            <a href="{{ route('login') }}" class="btn btn-outline">Masuk</a>
-            <button class="btn btn-leaf" onclick="goTo(1)" style="font-size: 1.1rem; padding: 16px 32px;">Buka Halaman Pertama →</button>
-        </div>
+        <button class="btn btn-leaf" onclick="goTo(1)" style="font-size: 1.1rem; padding: 16px 32px;">Buka Halaman Pertama →</button>
         <p class="hint" style="margin-top: 24px;">Geser ke samping, atau pakai tab di kanan layar</p>
     </div>
   </section>
