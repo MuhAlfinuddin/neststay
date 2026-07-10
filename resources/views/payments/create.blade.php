@@ -142,7 +142,6 @@
                                 class="w-full py-4 min-h-[52px] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base rounded-xl transition shadow-lg flex items-center justify-center gap-3">
                             <span>Konfirmasi Pembayaran</span>
                         </button>
-                        <p class="text-xs text-slate-400">* Demo — tidak ada transaksi sungguhan</p>
                     </div>
                 </div>
             </div>
