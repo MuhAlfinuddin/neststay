@@ -81,7 +81,8 @@
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
+            <!-- Submit / QRIS Confirm Buttons -->
+            <div id="normalSubmit" class="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-slate-100">
                 <a href="{{ route('payments.index') }}" class="flex items-center justify-center px-6 py-3 min-h-[44px] text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition w-full sm:w-auto">
                     Batal
                 </a>
@@ -89,68 +90,68 @@
                     Simpan Transaksi
                 </button>
             </div>
-        </form>
 
-        <!-- QRIS Demo Panel -->
-        <div id="qrisPanel" class="hidden mt-6 p-6 rounded-2xl bg-gradient-to-br from-cyan-50 via-white to-emerald-50 border border-emerald-200 shadow-sm">
-            <div class="text-center space-y-5">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
-                    📱 QRIS Simulation
-                </div>
+            <!-- QRIS Demo Panel (inside form for proper submission) -->
+            <div id="qrisPanel" class="hidden mt-6 p-6 rounded-2xl bg-gradient-to-br from-cyan-50 via-white to-emerald-50 border border-emerald-200 shadow-sm">
+                <div class="text-center space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+                        📱 QRIS Simulation
+                    </div>
 
-                <h3 class="text-lg font-black text-slate-900">Scan QRIS untuk Membayar</h3>
+                    <h3 class="text-lg font-black text-slate-900">Scan QRIS untuk Membayar</h3>
 
-                <!-- Demo QR Code -->
-                <div class="inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-md border border-slate-100">
-                    <svg width="180" height="180" viewBox="0 0 33 33" class="block">
-                        <rect width="33" height="33" fill="white"/>
-                        <rect x="0" y="0" width="7" height="7" fill="black" rx="1"/>
-                        <rect x="26" y="0" width="7" height="7" fill="black" rx="1"/>
-                        <rect x="0" y="26" width="7" height="7" fill="black" rx="1"/>
-                        <rect x="13" y="13" width="7" height="7" fill="black" rx="1"/>
-                        <rect x="26" y="13" width="2" height="2" fill="black"/>
-                        <rect x="0" y="13" width="2" height="2" fill="black"/>
-                        <rect x="13" y="0" width="2" height="2" fill="black"/>
-                        <rect x="13" y="26" width="2" height="2" fill="black"/>
-                        <rect x="4" y="10" width="2" height="2" fill="black"/>
-                        <rect x="10" y="4" width="2" height="2" fill="black"/>
-                        <rect x="20" y="4" width="2" height="2" fill="black"/>
-                        <rect x="26" y="10" width="2" height="2" fill="black"/>
-                        <rect x="4" y="22" width="2" height="2" fill="black"/>
-                        <rect x="22" y="22" width="2" height="2" fill="black"/>
-                        <rect x="18" y="10" width="2" height="2" fill="black"/>
-                        <rect x="10" y="18" width="2" height="2" fill="black"/>
-                        <rect x="6" y="14" width="2" height="4" fill="black"/>
-                        <rect x="20" y="14" width="2" height="4" fill="black"/>
-                        <rect x="14" y="6" width="4" height="2" fill="black"/>
-                        <rect x="14" y="20" width="4" height="2" fill="black"/>
-                        <rect x="2" y="2" width="3" height="3" fill="white"/>
-                        <rect x="28" y="2" width="3" height="3" fill="white"/>
-                        <rect x="2" y="28" width="3" height="3" fill="white"/>
-                        <rect x="14" y="14" width="5" height="5" fill="white"/>
-                        <circle cx="16.5" cy="16.5" r="1.5" fill="white"/>
-                    </svg>
-                </div>
-
-                <div class="text-sm text-slate-600 space-y-1">
-                    <p class="font-semibold">Total Pembayaran: <span id="qrisAmount" class="text-lg font-black text-emerald-700">Rp 0</span></p>
-                    <p>Scan menggunakan aplikasi e-wallet (GoPay, OVO, DANA, dll)</p>
-                </div>
-
-                <div class="flex flex-col gap-3">
-                    <button type="button" id="qrisConfirmBtn"
-                            onclick="confirmQrisPayment()"
-                            class="w-full py-4 min-h-[52px] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base rounded-xl transition shadow-lg flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
-                        <span id="qrisBtnText">Konfirmasi Pembayaran</span>
-                        <svg id="qrisBtnSpinner" class="hidden h-5 w-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                    <!-- Demo QR Code -->
+                    <div class="inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-md border border-slate-100">
+                        <svg width="180" height="180" viewBox="0 0 33 33" class="block">
+                            <rect width="33" height="33" fill="white"/>
+                            <rect x="0" y="0" width="7" height="7" fill="black" rx="1"/>
+                            <rect x="26" y="0" width="7" height="7" fill="black" rx="1"/>
+                            <rect x="0" y="26" width="7" height="7" fill="black" rx="1"/>
+                            <rect x="13" y="13" width="7" height="7" fill="black" rx="1"/>
+                            <rect x="26" y="13" width="2" height="2" fill="black"/>
+                            <rect x="0" y="13" width="2" height="2" fill="black"/>
+                            <rect x="13" y="0" width="2" height="2" fill="black"/>
+                            <rect x="13" y="26" width="2" height="2" fill="black"/>
+                            <rect x="4" y="10" width="2" height="2" fill="black"/>
+                            <rect x="10" y="4" width="2" height="2" fill="black"/>
+                            <rect x="20" y="4" width="2" height="2" fill="black"/>
+                            <rect x="26" y="10" width="2" height="2" fill="black"/>
+                            <rect x="4" y="22" width="2" height="2" fill="black"/>
+                            <rect x="22" y="22" width="2" height="2" fill="black"/>
+                            <rect x="18" y="10" width="2" height="2" fill="black"/>
+                            <rect x="10" y="18" width="2" height="2" fill="black"/>
+                            <rect x="6" y="14" width="2" height="4" fill="black"/>
+                            <rect x="20" y="14" width="2" height="4" fill="black"/>
+                            <rect x="14" y="6" width="4" height="2" fill="black"/>
+                            <rect x="14" y="20" width="4" height="2" fill="black"/>
+                            <rect x="2" y="2" width="3" height="3" fill="white"/>
+                            <rect x="28" y="2" width="3" height="3" fill="white"/>
+                            <rect x="2" y="28" width="3" height="3" fill="white"/>
+                            <rect x="14" y="14" width="5" height="5" fill="white"/>
+                            <circle cx="16.5" cy="16.5" r="1.5" fill="white"/>
                         </svg>
-                    </button>
-                    <p class="text-xs text-slate-400">* Demo — tidak ada transaksi sungguhan</p>
+                    </div>
+
+                    <div class="text-sm text-slate-600 space-y-1">
+                        <p class="font-semibold">Total Pembayaran: <span id="qrisAmount" class="text-lg font-black text-emerald-700">Rp 0</span></p>
+                        <p>Scan menggunakan aplikasi e-wallet (GoPay, OVO, DANA, dll)</p>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <button type="button" id="qrisConfirmBtn"
+                                onclick="confirmQrisPayment()"
+                                class="w-full py-4 min-h-[52px] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base rounded-xl transition shadow-lg flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
+                            <span id="qrisBtnText">Konfirmasi Pembayaran</span>
+                            <svg id="qrisBtnSpinner" class="hidden h-5 w-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                            </svg>
+                        </button>
+                        <p class="text-xs text-slate-400">* Demo — tidak ada transaksi sungguhan</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -170,21 +171,22 @@
 
     function toggleQrisPanel() {
         var panel = document.getElementById('qrisPanel');
+        var normalSubmit = document.getElementById('normalSubmit');
         var method = document.getElementById('payment_method').value;
-        panel.classList.toggle('hidden', method !== 'qris');
+        var isQris = method === 'qris';
+        panel.classList.toggle('hidden', !isQris);
+        normalSubmit.classList.toggle('hidden', isQris);
     }
 
     function confirmQrisPayment() {
+        var form = document.querySelector('form');
         var btn = document.getElementById('qrisConfirmBtn');
         var text = document.getElementById('qrisBtnText');
         var spinner = document.getElementById('qrisBtnSpinner');
-        var amountInput = document.getElementById('amount');
-        var amount = parseInt(amountInput.value) || 0;
 
-        if (amount <= 0) {
-            amountInput.focus();
-            amountInput.classList.add('ring-2', 'ring-red-400');
-            setTimeout(function() { amountInput.classList.remove('ring-2', 'ring-red-400'); }, 2000);
+        // Run HTML5 validation manually
+        if (!form.checkValidity()) {
+            form.reportValidity();
             return;
         }
 
@@ -197,9 +199,15 @@
             text.textContent = '✓ Pembayaran Berhasil!';
             btn.className = 'w-full py-4 min-h-[52px] bg-emerald-600 text-white font-black text-base rounded-xl shadow-lg flex items-center justify-center gap-3 cursor-default';
 
-            // Set payment_status to paid and submit
+            // Set payment_status to paid
             document.getElementById('payment_status').value = 'paid';
-            document.querySelector('form').submit();
+
+            // Use requestSubmit if available (triggers HTML5 validation properly)
+            if (typeof form.requestSubmit === 'function') {
+                form.requestSubmit();
+            } else {
+                form.submit();
+            }
         }, 3000);
     }
 
