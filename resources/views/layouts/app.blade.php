@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -26,7 +26,7 @@
 <body class="bg-[var(--color-paper)] text-[var(--color-ink)] selection:bg-[var(--color-marigold)] selection:text-[var(--color-ink)] min-h-screen flex">
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-20 w-64 bg-[var(--color-teak-deep)] text-[#F6EFDC] flex flex-col justify-between border-r border-[var(--color-teak)] hidden md:flex">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-[var(--color-teak-deep)] text-[#F6EFDC] flex flex-col justify-between border-r border-[var(--color-teak)] hidden md:flex">
         <div>
             <!-- Header Brand -->
             <div class="h-16 flex items-center px-6 border-b border-[var(--color-teak)]">
@@ -100,21 +100,21 @@
     </aside>
 
     <!-- Main Content Area -->
-    <div class="md:pl-64 flex-grow flex flex-col min-h-screen min-w-0 w-full">
+    <div class="flex-grow flex flex-col min-h-screen min-w-0 w-full transition-all duration-300 md:pl-64">
         <!-- Header Top Navbar -->
-        <header class="h-16 bg-[var(--color-paper)]/70 backdrop-blur-md border-b border-[var(--color-teak)]/30 rounded-b-2xl flex items-center justify-between px-4 md:px-8 sticky top-0 z-10">
+        <header class="h-16 bg-[var(--color-paper)]/70 backdrop-blur-md border-b border-[var(--color-teak)]/30 flex items-center justify-between px-4 sticky top-0 z-40">
             <div class="flex items-center">
-                <h2 class="text-lg font-bold text-[var(--color-teak-deep)]">
-                    @yield('header_title', 'StayNest Dashboard')
-                </h2>
-            </div>
-            <div class="flex items-center space-x-4">
                 <button id="sidebarToggle" class="md:hidden mr-4 p-2 text-[var(--color-teak-deep)] focus:outline-none">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-                <div class="text-right hidden md:block">
+                <h2 class="text-lg font-bold text-[var(--color-teak-deep)] truncate">
+                    @yield('header_title', 'StayNest Dashboard')
+                </h2>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-right hidden sm:block">
                     <p class="text-sm font-bold text-[var(--color-teak-deep)]">{{ auth()->user()->name }}</p>
                     <p class="text-xs text-[var(--color-ink-soft)] uppercase font-semibold">{{ auth()->user()->role }}</p>
                 </div>
