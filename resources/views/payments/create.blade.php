@@ -138,14 +138,9 @@
                     </div>
 
                     <div class="flex flex-col gap-3">
-                        <button type="button" id="qrisConfirmBtn"
-                                onclick="confirmQrisPayment()"
-                                class="w-full py-4 min-h-[52px] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base rounded-xl transition shadow-lg flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
-                            <span id="qrisBtnText">Konfirmasi Pembayaran</span>
-                            <svg id="qrisBtnSpinner" class="hidden h-5 w-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                            </svg>
+                        <button type="submit" id="qrisConfirmBtn"
+                                class="w-full py-4 min-h-[52px] bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base rounded-xl transition shadow-lg flex items-center justify-center gap-3">
+                            <span>Konfirmasi Pembayaran</span>
                         </button>
                         <p class="text-xs text-slate-400">* Demo — tidak ada transaksi sungguhan</p>
                     </div>
@@ -154,9 +149,16 @@
         </form>
     </div>
 </div>
-
 <script>
-    // Auto-select payment method from URL param
+    function toggleQrisPanel() {
+        var panel = document.getElementById('qrisPanel');
+        var normalSubmit = document.getElementById('normalSubmit');
+        var method = document.getElementById('payment_method').value;
+        var isQris = method === 'qris';
+        panel.classList.toggle('hidden', !isQris);
+        normalSubmit.classList.toggle('hidden', isQris);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         var params = new URLSearchParams(window.location.search);
         var method = params.get('method');
@@ -167,55 +169,7 @@
                 toggleQrisPanel();
             }
         }
-    });
 
-    function toggleQrisPanel() {
-        var panel = document.getElementById('qrisPanel');
-        var normalSubmit = document.getElementById('normalSubmit');
-        var method = document.getElementById('payment_method').value;
-        var isQris = method === 'qris';
-        panel.classList.toggle('hidden', !isQris);
-        normalSubmit.classList.toggle('hidden', isQris);
-    }
-
-    function confirmQrisPayment() {
-        var form = document.querySelector('form');
-        var btn = document.getElementById('qrisConfirmBtn');
-        var text = document.getElementById('qrisBtnText');
-        var spinner = document.getElementById('qrisBtnSpinner');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        btn.disabled = true;
-        text.textContent = 'Memproses Pembayaran...';
-        spinner.classList.remove('hidden');
-
-        setTimeout(function() {
-            var formData = new FormData(form);
-            formData.set('payment_status', 'paid');
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'X-Requested-With': 'XMLHttpRequest' }
-            }).then(function(response) {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else if (response.ok) {
-                    window.location.href = '{{ route("payments.index") }}';
-                } else {
-                    window.location.reload();
-                }
-            }).catch(function() {
-                window.location.href = '{{ route("payments.index") }}';
-            });
-        }, 3000);
-    }
-
-    // Update QRIS amount display when amount input changes
-    document.addEventListener('DOMContentLoaded', function() {
         var amountInput = document.getElementById('amount');
         var qrisAmount = document.getElementById('qrisAmount');
         if (amountInput && qrisAmount) {
@@ -224,6 +178,18 @@
                 qrisAmount.textContent = 'Rp ' + val.toLocaleString('id-ID');
             });
         }
+
+        // Form submit handler: set payment_status=paid for QRIS
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function() {
+            if (document.getElementById('payment_method').value === 'qris') {
+                document.getElementById('payment_status').value = 'paid';
+                var btn = document.getElementById('qrisConfirmBtn');
+                btn.disabled = true;
+                btn.innerHTML =
+                    '<svg class="h-5 w-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Memproses...';
+            }
+        });
     });
 </script>
 @endsection
