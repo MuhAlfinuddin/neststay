@@ -32,15 +32,18 @@
 </head>
 <body class="bg-[#F6EFDC] text-[#2B2013] selection:bg-[#E3A857] selection:text-[#2B2013] min-h-screen flex flex-col">
     <!-- Navbar -->
-    <nav class="bg-[#FFFBF1]/90 backdrop-blur-md sticky top-4 z-50 mt-4 mx-6 lg:mx-8 rounded-2xl shadow-lg border border-[#EEE1C3]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+    <nav class="bg-[#FFFBF1]/90 backdrop-blur-md sticky top-4 z-50 mt-4 mx-4 md:mx-6 lg:mx-8 rounded-2xl shadow-lg border border-[#EEE1C3]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand -->
                 <div class="flex items-center">
                     <a href="{{ route('landing') }}" class="flex items-center space-x-2">
                         <span class="text-2xl font-black text-[#2B2013]">Stay<span class="text-[#C6863A]">Nest</span></span>
                     </a>
                 </div>
-                <div class="flex items-center space-x-4">
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex items-center space-x-6">
                     <a href="{{ route('landing') }}#features" class="text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] transition">Fitur</a>
                     <a href="{{ route('landing') }}#pricing" class="text-sm font-medium text-[#6B5A44] hover:text-[#C6863A] transition">Harga</a>
                     @auth
@@ -50,9 +53,34 @@
                         <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-4 h-9 text-sm font-bold border border-transparent bg-[#C6863A] text-[#FBF6E9] rounded-lg transition hover:bg-[#E3A857] shadow-sm">Coba Gratis</a>
                     @endauth
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuToggle" class="p-2 text-[#6B5A44] hover:text-[#C6863A] focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobileMenu" class="hidden md:hidden bg-[#FFFBF1] border-t border-[#EEE1C3] px-4 pt-2 pb-4 rounded-b-2xl">
+            <a href="{{ route('landing') }}#features" class="block py-2 text-sm font-medium text-[#6B5A44]">Fitur</a>
+            <a href="{{ route('landing') }}#pricing" class="block py-2 text-sm font-medium text-[#6B5A44]">Harga</a>
+            @guest
+                <a href="{{ route('login') }}" class="block py-2 text-sm font-semibold text-[#6B5A44]">Masuk</a>
+                <a href="{{ route('register') }}" class="block py-2 text-sm font-bold text-[#C6863A]">Coba Gratis</a>
+            @endguest
+        </div>
     </nav>
+
+    <script>
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+    </script>
 
     <!-- Main Content -->
     <main class="flex-grow">
