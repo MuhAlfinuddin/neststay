@@ -183,8 +183,6 @@
         var btn = document.getElementById('qrisConfirmBtn');
         var text = document.getElementById('qrisBtnText');
         var spinner = document.getElementById('qrisBtnSpinner');
-
-        // Run HTML5 validation manually
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
@@ -195,19 +193,24 @@
         spinner.classList.remove('hidden');
 
         setTimeout(function() {
-            spinner.classList.add('hidden');
-            text.textContent = '✓ Pembayaran Berhasil!';
-            btn.className = 'w-full py-4 min-h-[52px] bg-emerald-600 text-white font-black text-base rounded-xl shadow-lg flex items-center justify-center gap-3 cursor-default';
+            var formData = new FormData(form);
+            formData.set('payment_status', 'paid');
 
-            // Set payment_status to paid
-            document.getElementById('payment_status').value = 'paid';
-
-            // Use requestSubmit if available (triggers HTML5 validation properly)
-            if (typeof form.requestSubmit === 'function') {
-                form.requestSubmit();
-            } else {
-                form.submit();
-            }
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function(response) {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (response.ok) {
+                    window.location.href = '{{ route("payments.index") }}';
+                } else {
+                    window.location.reload();
+                }
+            }).catch(function() {
+                window.location.href = '{{ route("payments.index") }}';
+            });
         }, 3000);
     }
 
