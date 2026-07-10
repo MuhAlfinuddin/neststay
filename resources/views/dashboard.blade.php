@@ -7,15 +7,15 @@
     {{-- Payment Notification Banner --}}
     @if (isset($homestay) && $homestay->subscription_status !== 'active')
         <div class="p-4 mb-6 rounded-xl border border-amber-200 bg-amber-50 text-amber-800">
-            <div class="flex items-center space-x-4">
-                <div class="text-2xl">⚠️</div>
-                <div>
-                    <p class="font-bold">Paket '{{ ucfirst($homestay->plan) }}' Anda menunggu pembayaran.</p>
-                    <p class="text-sm">Silakan selesaikan pembayaran untuk mengaktifkan semua fitur dan menghilangkan batasan.</p>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="text-2xl flex-shrink-0">⚠️</div>
+                <div class="flex-grow">
+                    <p class="font-bold text-sm sm:text-base">Paket '{{ ucfirst($homestay->plan) }}' Anda menunggu pembayaran.</p>
+                    <p class="text-xs sm:text-sm mt-1">Silakan selesaikan pembayaran untuk mengaktifkan semua fitur dan menghilangkan batasan.</p>
                 </div>
-                <form action="{{ route('payments.activate') }}" method="POST">
+                <form action="{{ route('payments.activate') }}" method="POST" class="w-full sm:w-auto">
                     @csrf
-                    <button type="submit" class="ml-auto whitespace-nowrap inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-full shadow transition transform hover:scale-105">
+                    <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-full shadow transition transform hover:scale-105">
                         Bayar Sekarang
                     </button>
                 </form>
