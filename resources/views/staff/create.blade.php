@@ -33,12 +33,12 @@
             <div class="space-y-4">
                 <div>
                     <label for="name" class="block text-sm font-semibold text-slate-700">Nama Lengkap Staff</label>
-                    <input id="name" name="name" type="text" required placeholder="Contoh: Andi Wijaya" value="{{ old('name') }}" autocomplete="name" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
+                    <input id="name" name="name" type="text" required placeholder="alpinnn" value="{{ old('name') }}" autocomplete="name" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
 
                 <div>
                     <label for="email" class="block text-sm font-semibold text-slate-700">Alamat Email (Username Login)</label>
-                    <input id="email" name="email" type="email" required placeholder="Contoh: andi@staynest.com" value="{{ old('email') }}" inputmode="email" autocomplete="email" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
+                    <input id="email" name="email" type="email" required placeholder="pinn@staynest.com" value="{{ old('email') }}" inputmode="email" autocomplete="email" class="mt-1 appearance-none block w-full px-4 py-3 border border-slate-300 rounded-xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-teak)] focus:border-[var(--color-teak)] text-[16px]">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
