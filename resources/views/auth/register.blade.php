@@ -32,11 +32,11 @@
                 <div class="space-y-4">
                     <div>
                         <label for="name" class="block text-sm font-semibold mb-1 text-panel">Full Name</label>
-                        <input id="name" name="name" type="text" required value="{{ old('name') }}" autocomplete="name" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]" placeholder="John Doe">
+                        <input id="name" name="name" type="text" required value="{{ old('name') }}" autocomplete="name" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-semibold mb-1 text-panel">Email</label>
-                        <input id="email" name="email" type="email" required value="{{ old('email') }}" inputmode="email" autocomplete="email" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]" placeholder="m@example.com">
+                        <input id="email" name="email" type="email" required value="{{ old('email') }}" inputmode="email" autocomplete="email" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                         <p class="mt-1 text-xs text-ink-soft">We'll use this to contact you. We will not share your email with anyone else.</p>
                     </div>
                     <div>
