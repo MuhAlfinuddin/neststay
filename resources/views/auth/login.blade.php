@@ -1,4 +1,4 @@
-@section('title', 'Login')
+@section('title', 'Masuk')
 
 @extends('layouts.guest')
 
@@ -6,10 +6,10 @@
 <div class="min-h-[80vh] flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-8 bg-paper">
     <div class="sm:mx-auto w-full max-w-md">
         <h2 class="mt-6 text-center text-2xl sm:text-3xl font-bold tracking-tight text-ink">
-            Login to your account
+            Masuk ke akun Anda
         </h2>
         <p class="mt-2 text-center text-sm text-ink-soft">
-            Enter your email below to login to your account
+            Masukkan email Anda di bawah untuk masuk
         </p>
     </div>
 
@@ -23,20 +23,17 @@
                 </div>
                 <div>
                     <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm font-semibold mb-1 text-panel">Password</label>
-                        <a href="#" class="text-sm text-marigold hover:text-marigold-deep">Forgot your password?</a>
+                        <label for="password" class="block text-sm font-semibold mb-1 text-panel">Kata Sandi</label>
+                        <a href="#" class="text-sm text-marigold hover:text-marigold-deep">Lupa kata sandi?</a>
                     </div>
                     <input id="password" name="password" type="password" required autocomplete="current-password" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                 </div>
                 <button type="submit" class="w-full flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
-                    Login
-                </button>
-                <button type="button" class="w-full flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-panel transition bg-transparent border border-ink-soft hover:bg-ink-soft">
-                    Login with Google
+                    Masuk
                 </button>
             </form>
             <div class="mt-6 text-center text-sm text-ink-soft">
-                Don't have an account? <a href="{{ route('register') }}" class="text-marigold hover:text-marigold-deep">Sign up</a>
+                Belum punya akun? <a href="{{ route('register') }}" class="text-marigold hover:text-marigold-deep">Daftar</a>
             </div>
         </div>
     </div>
