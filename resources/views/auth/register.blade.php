@@ -6,10 +6,10 @@
 <div class="min-h-[90vh] flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-8 bg-paper">
     <div class="sm:mx-auto w-full max-w-lg">
         <h2 class="mt-6 text-center text-2xl sm:text-3xl font-bold tracking-tight text-ink">
-            Buat akun baru
+            Daftarkan Homestay Anda
         </h2>
         <p class="mt-2 text-center text-sm text-ink-soft">
-            Masukkan data Anda di bawah untuk membuat akun
+            Isi data diri dan data homestay Anda
         </p>
     </div>
 
@@ -49,11 +49,28 @@
                         <input id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
                         <p class="mt-1 text-xs text-ink-soft">Harap konfirmasi kata sandi Anda.</p>
                     </div>
+
+                    <hr class="border-ink-soft/30 my-2">
+
+                    <h3 class="text-sm font-bold text-panel/80">2. Data Homestay</h3>
+
+                    <div>
+                        <label for="homestay_name" class="block text-sm font-semibold mb-1 text-panel">Nama Homestay / Villa</label>
+                        <input id="homestay_name" name="homestay_name" type="text" required value="{{ old('homestay_name') }}" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
+                    </div>
+                    <div>
+                        <label for="homestay_phone" class="block text-sm font-semibold mb-1 text-panel">Nomor Telepon Homestay</label>
+                        <input id="homestay_phone" name="homestay_phone" type="tel" required value="{{ old('homestay_phone') }}" placeholder="Contoh: 08123456789" class="block w-full px-4 py-3 min-h-[44px] border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">
+                    </div>
+                    <div>
+                        <label for="homestay_address" class="block text-sm font-semibold mb-1 text-panel">Alamat Lengkap</label>
+                        <textarea id="homestay_address" name="homestay_address" rows="3" required class="block w-full px-4 py-3 border rounded-xl focus:outline-none border-ink-soft bg-ink-soft text-panel text-[16px]">{{ old('homestay_address') }}</textarea>
+                    </div>
                 </div>
 
                 <div>
                     <button type="submit" class="w-full flex justify-center py-3 min-h-[44px] px-4 rounded-xl text-sm font-bold text-ink transition bg-panel hover:bg-paper">
-                        Buat Akun
+                        Daftar & Buat Homestay
                     </button>
                 </div>
             </form>
