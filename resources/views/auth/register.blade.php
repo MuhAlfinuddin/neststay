@@ -9,7 +9,7 @@
             Buat akun baru
         </h2>
         <p class="mt-2 text-center text-sm text-ink-soft">
-            Enter your information below to create your account
+            Masukkan data Anda di bawah untuk membuat akun
         </p>
     </div>
 
